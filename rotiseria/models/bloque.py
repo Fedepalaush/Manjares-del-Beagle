@@ -1,10 +1,10 @@
 from django.db import models
-from rotiseria.models.repartidor import Repartidor
+from rotiseria.models.usuario import Usuario
 
 class Bloque(models.Model):
-    id=models.IntegerField()
-    fecha= models.DateField()
-    repartidor= models.ForeignKey(Repartidor, on_delete=models.CASCADE)
+    id = models.IntegerField()
+    fecha = models.DateField()
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id
