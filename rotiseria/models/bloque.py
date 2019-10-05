@@ -7,4 +7,4 @@ class Bloque(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id
+        return str(self.id)     
