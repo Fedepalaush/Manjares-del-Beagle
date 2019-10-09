@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Categorías</title>
+</head>
+<body>
+
+
+ {% if categorías %}
+      {% for item in categorías %}
+        {{item.nombre}}
+        <br>
+  {% endfor %}
+
+   {% else %}
+      <h1>No hay registros de categorías</h1>
+    {% endif %}
+
+</body>
+</html>
