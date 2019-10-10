@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Bloques</title>
+</head>
+<body>
+
+
+ {% if bloques %}
+      {% for item in bloques %}
+        {{item.id}}
+        {{item.fecha}}
+        {{item.usuario}}
+        <br>
+  {% endfor %}
+
+   {% else %}
+      <h1>No hay registros de bloques</h1>
+    {% endif %}
+
+</body>
+</html>
