@@ -1,7 +1,7 @@
 from django.views.generic import CreateView, ListView
 from django.shortcuts import render, redirect
 from rotiseria.models import Cliente, Pedido
-from rotiseria.forms import ClienteForm
+from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
 
 
@@ -31,3 +31,19 @@ def BorrarCliente(request, dni):
 
 
 
+class CrearPedido(CreateView):
+    model = Pedido
+    form_class = PedidoForm
+    template_name = 'Cliente/crearPedido.html'
+    success_url = reverse_lazy('index')
+
+
+class ListarPedido(ListView):
+    model = Pedido
+    template_name = "Cliente/listarPedidos.html"
+    form_class = PedidoForm
+
+    def get(self, request, *args, **kwargs):
+        pedidos = Pedido.objects.all()
+        context_dict = {'pedidos': pedidos}
+        return render(request, self.template_name, context=context_dict)

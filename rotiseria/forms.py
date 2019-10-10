@@ -1,5 +1,5 @@
 from django import forms
-from .models import Producto, Categoría, Cliente, Bloque
+from .models import Producto, Categoría, Cliente, Bloque, Pedido
 
 class ProductoForm(forms.ModelForm):
 
@@ -66,5 +66,26 @@ class ClienteForm(forms.ModelForm):
 			'nombre': 'Nombre',
 			'telefono': 'Telefono',
 			'direccion': 'Direccion'}
+
+
+class PedidoForm(forms.ModelForm):
+	class Meta:
+		model = Pedido
+		fields = [
+			'fecha',
+			'total',
+			'productos',
+			'bloque',
+			'cliente',
+			'estadoPedido',
+		]
+		labels = {
+			'fecha': 'Fecha',
+			'total': 'Total',
+			'productos':'Productos',
+			'bloque': 'Bloque',
+			'cliente': 'Cliente',
+			'estadoPedido': 'EstadoPedido'}
+
 
 
