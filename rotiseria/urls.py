@@ -1,11 +1,9 @@
 from django.urls import path
-from .View.principal import index
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
-from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, lista_productos
 urlpatterns = [
 
-path('', index, name='index'),
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
 path('listarProductos',ListarProducto.as_view(), name = 'listar_producto'),
 path('borrarProducto/<str:nombrep>/', BorrarProducto, name='borrar_producto'),
@@ -24,7 +22,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-
+path('', lista_productos, name='lista_productos'),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 ]

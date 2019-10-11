@@ -5,19 +5,12 @@
     <title>Listado de Productos</title>
 </head>
 <body>
-
-
  {% if productos %}
       {% for item in productos %}
-
-
         {{item.nombre}}
         {{item.descripcion}}
         {{item.precioActual}}
-
         <br>
-
-
 
   {% endfor %}
 

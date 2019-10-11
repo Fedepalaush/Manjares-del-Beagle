@@ -1,0 +1,10 @@
+
+<div class="container">
+        
+    {% for producto in productos %}
+      <div class="card">
+          <h4>{{producto.nombre}}</h4>
+          <p>{{ producto.descripcion }}</p>
+      </div>
+    {% endfor %}
+</div>
