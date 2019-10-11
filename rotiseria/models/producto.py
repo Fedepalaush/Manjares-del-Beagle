@@ -11,3 +11,6 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def getPrecioActual(self):
+        return self.precioActual
