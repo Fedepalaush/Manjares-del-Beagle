@@ -22,7 +22,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-path('', lista_productos, name='lista_productos'),
+path('listaProductos', lista_productos, name='lista_productos'),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 ]

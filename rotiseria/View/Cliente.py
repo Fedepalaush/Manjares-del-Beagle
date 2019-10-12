@@ -1,19 +1,20 @@
 from django.views.generic import CreateView, ListView
 from django.shortcuts import render, redirect
-from rotiseria.models import Cliente, Pedido, Producto
+from rotiseria.models import Cliente, Pedido, Producto, Categoría
 from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
 
 def lista_productos(request):
+    categorias = Categoría.objects.all()
     productos = Producto.objects.all()
-    return render(request, 'Cliente/listaProductos.html', {'productos': productos})
-
+    contexto = {'productos': productos, 'categorias': categorias}
+    return render(request, 'Cliente/listaProductos.html', contexto)
+    
 class CrearCliente(CreateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'Cliente/crearCliente.html'
     success_url = reverse_lazy('index')
-
 
 class ListarCliente(ListView):
     model = Cliente

@@ -1,4 +1,4 @@
-
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,10 +13,15 @@
   </head>
   <body>
 
+    <h1>Productos disponibles</h1>
     
-  {% block content %}
+    {% for producto in productos %}
+      <div class="card">
+          <h4>{{producto.nombre}}</h4>
+          <p>{{ producto.descripcion }}</p>
+      </div>
+    {% endfor %}
 
-  {% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
