@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Clientes</title>
+</head>
+<body>
+
+
+ {% if clientes %}
+      {% for item in clientes %}
+        {{item.dni}}
+        {{item.nombre}}
+        {{item.telefono}}
+        {{item.direccion}}
+        <br>
+  {% endfor %}
+
+   {% else %}
+      <h1>No hay registros de clientes</h1>
+    {% endif %}
+
+</body>
+</html>

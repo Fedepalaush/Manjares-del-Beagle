@@ -15,3 +15,6 @@ class Pedido (models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def generarTotal (self, subtotal):
+        self.total=+ subtotal
