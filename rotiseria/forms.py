@@ -61,13 +61,12 @@ class ClienteForm(forms.ModelForm):
 			'dni',
 			'nombre',
 			'telefono',
-			'direccion',
+
 		]
 		labels = {
 			'dni': 'DNI',
 			'nombre': 'Nombre',
-			'telefono': 'Telefono',
-			'direccion': 'Direccion'}
+			'telefono': 'Telefono',}
 
 
 class PedidoForm(forms.ModelForm):
