@@ -1,23 +1,14 @@
+{% load static%}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Maps</title>
 	<meta charset="UTF-8"/>
-	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<link rel="stylesheet" href="{%static 'css/estilo.css'%}">
 </head>
 <body>
 	<div id="map"></div>
-
-	<!-- Mostramos el JSON -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<span id="res"></span>
-	<!-- Creamos el JSON con los datos Direccion, Latitud y Longitud
-		los datos son cargados desde la BDD-->
-	<script src="creaJSON.js"></script>
-
-
-	<!-- Iniciamos el mapa con los marcadores del JSON -->
-	<script src="script.js"></script>
+	<script src=" {%static 'js/script.js'%}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 </body>
 </html>

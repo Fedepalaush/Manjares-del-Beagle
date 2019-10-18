@@ -18,11 +18,9 @@ function initMap(){
     //GLOBO DE INFORMACION DEL MARCADOR 1
     var texto1 = '<h3> Kuanip 189 </h3>' + '<p> Pedido N°210 </p>' + 
                 '<input type="button" value="Detalles">';
-
     var informacion1 = new google.maps.InfoWindow({
         content: texto1
     });
-
     marker1.addListener('click', function(){
         informacion1.open(map,marker1);
     });
@@ -37,11 +35,9 @@ function initMap(){
     //GLOBO DE INFORMACION DEL MARCADOR 2
     var texto2 = '<h3> Hernando de Magallanes 1120 </h3>' + '<p> Pedido N°211 </p>' + 
                 '<input type="button" value="Detalles">';
-
     var informacion2 = new google.maps.InfoWindow({
         content: texto2
     });
-
     marker2.addListener('click', function(){
         informacion2.open(map,marker2);
     });
