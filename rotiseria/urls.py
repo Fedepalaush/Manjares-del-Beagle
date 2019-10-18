@@ -3,6 +3,7 @@ from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarPr
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, lista_productos
 from rotiseria.View.Repartidor import mapa
+from rotiseria.View.Sesion import SignIn, RegistroUsuario
 urlpatterns = [
 
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
@@ -28,5 +29,8 @@ path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 
 path('vistaMapa',mapa, name = 'mapa'),
+
+path('login',SignIn.as_view(), name = 'login'),
+path('registro',RegistroUsuario.as_view(), name = 'registro'),
 
 ]

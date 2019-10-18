@@ -1,5 +1,7 @@
 from django import forms
 from .models import Producto, Categoría, Cliente, Bloque, Pedido
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class ProductoForm(forms.ModelForm):
 
@@ -87,5 +89,32 @@ class PedidoForm(forms.ModelForm):
 			'cliente': 'Cliente',
 			'estadoPedido': 'EstadoPedido'}
 
+
+class RegistroForm(UserCreationForm):
+
+	rol = forms.CharField(required=True)
+	class Meta:
+			model = User
+			fields = [
+				'username',
+				'first_name',
+				'last_name',
+				'password1',
+				'password2',
+				'rol'
+			]
+
+
+
+	def save (self, commit=True):
+		user = super(RegistroForm,self).save(commit=False)
+		user.first_name = self.cleaned_data['first_name']
+		user.last_name = self.cleaned_data['last_name']
+		user.rol = self.cleaned_data['rol']
+
+		if commit:
+			user.save()
+
+		return user
 
 
