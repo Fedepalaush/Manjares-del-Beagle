@@ -1,9 +1,15 @@
 from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
+<<<<<<< HEAD
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
 app_name = 'rotiseria'
 
+=======
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, lista_productos
+from rotiseria.View.Repartidor import mapa
+from rotiseria.View.Sesion import SignIn, RegistroUsuario
+>>>>>>> 2209e2b9173dfb0654bd98c6448753021c2aa257
 urlpatterns = [
 
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
@@ -29,5 +35,14 @@ path('', indexCliente, name='lista_productos'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
+<<<<<<< HEAD
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
+=======
+
+path('vistaMapa',mapa, name = 'mapa'),
+
+path('login',SignIn.as_view(), name = 'login'),
+path('registro',RegistroUsuario.as_view(), name = 'registro'),
+
+>>>>>>> 2209e2b9173dfb0654bd98c6448753021c2aa257
 ]
