@@ -132,3 +132,5 @@ STATICFILES_DIR = (os.path.join(BASE_DIR),'rotiseria/static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'boostrap4'
+
+CART_SESSION_ID = 'carro'

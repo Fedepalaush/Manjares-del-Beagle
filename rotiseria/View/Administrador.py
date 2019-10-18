@@ -1,8 +1,11 @@
 from django.views.generic import CreateView, ListView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from rotiseria.models import Producto, Categoría
 from rotiseria.forms import ProductoForm, CategoriaForm
 from django.urls import reverse_lazy
+
+def index(request):
+    return render(request, 'base.html')
 
 class CrearProducto (CreateView):
         model = Producto

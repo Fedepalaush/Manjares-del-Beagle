@@ -6,3 +6,4 @@ from .pedido import Pedido
 from .producto import Producto
 from .usuario import Usuario
 from .rol import Rol
+from .mapa import Mapa

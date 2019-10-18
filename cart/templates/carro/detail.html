@@ -1,0 +1,46 @@
+{% extends 'Cliente/base.html' %}
+
+{% block content %}
+    <h1>Tu carrito de compras</h1>
+    <table class="cart">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Remover</th>
+                <th>Precio por unidad</th>                
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in carro %}
+            {% with producto=item.producto %}
+            <tr>
+                <td>
+                </td>
+                <td>{{ producto.nombre }}</td>
+                <td>
+                    <form action="{% url 'carro:añadir_carrito' producto.pk %}" method="post">
+                        {{ item.actualizar_cantidad_form.quantity }}
+                        {{ item.actualizar_cantidad_form.update }}
+                        <input type="submit" value="Update">
+                        {% csrf_token %}
+                    </form>
+                </td>
+                <td><a href="{% url 'carro:remover_carrito' producto.pk %}">Remove</a></td>
+                <td class="num">${{ item.prcio }}</td>
+                <td class="num">${{ item.precio_total }}</td>
+            </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>Total</td>
+            <td colspan="4"></td>
+            <td class="num">${{ carro.get_precio_total }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-right">
+        <a href="{% url 'rotiseria:lista_productos' %}" class="button light">Continuar comprando</a>
+    </p>
+{% endblock %}

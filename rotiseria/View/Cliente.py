@@ -3,11 +3,16 @@ from django.shortcuts import render, redirect
 from rotiseria.models import Cliente, Pedido, Producto, Categoría
 from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
+from cart.forms import AñadirProductoCarritoForm
 
-def lista_productos(request):
+def quienesSomos(request):
+    return render(request, 'Cliente/quienesSomos.html')
+
+def indexCliente(request):
     categorias = Categoría.objects.all()
     productos = Producto.objects.all()
-    contexto = {'productos': productos, 'categorias': categorias}
+    carro_producto_form = AñadirProductoCarritoForm()
+    contexto = {'productos': productos, 'categorias': categorias, 'carro_producto_form': carro_producto_form}
     return render(request, 'Cliente/listaProductos.html', contexto)
     
 class CrearCliente(CreateView):
