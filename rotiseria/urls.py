@@ -5,7 +5,6 @@ from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, C
 from rotiseria.View.Repartidor import mapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
 
-app_name = 'rotiseria'  
 urlpatterns = [
 
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
@@ -26,7 +25,6 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-#Esta es la view del cliente..
 path('', indexCliente, name='lista_productos'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
