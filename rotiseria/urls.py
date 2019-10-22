@@ -33,8 +33,8 @@ path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
-path('vistaMapa',mapa, name = 'mapa'),
-path('login',SignIn.as_view(), name = 'login'),
-path('registro',RegistroUsuario.as_view(), name = 'registro'),
+path('vistaMapa/',mapa, name = 'mapa'),
+path('accounts/login/',SignIn.as_view(), name = 'login'),
+path('registro/',RegistroUsuario.as_view(), name = 'registro'),
 
 ]

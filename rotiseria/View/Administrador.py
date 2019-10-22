@@ -1,19 +1,25 @@
 from django.views.generic import CreateView, ListView
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from rotiseria.models import Producto, Categoría
 from rotiseria.forms import ProductoForm, CategoriaForm
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 def index(request):
     return render(request, 'base.html')
 
+@method_decorator(login_required, name='dispatch')
 class CrearProducto (CreateView):
+        login_required(login_url='registro')
         model = Producto
         form_class= ProductoForm
         template_name = 'Administrador/crearproducto.html'
         success_url = reverse_lazy('index')
 
+@method_decorator(login_required, name='dispatch')
 class ListarProducto (ListView):
+    login_required(login_url='registro')
     model = Producto
     template_name = "Administrador/listarproducto.html"
     form_class = ProductoForm
