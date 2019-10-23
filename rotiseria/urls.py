@@ -4,6 +4,7 @@ from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
 from rotiseria.View.Repartidor import mapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
+from django.contrib.auth.views import logout_then_login
 
 urlpatterns = [
 
@@ -25,7 +26,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-path('', indexCliente, name='lista_productos'),
+path('index', indexCliente, name='lista_productos'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
@@ -35,6 +36,7 @@ path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 path('vistaMapa/',mapa, name = 'mapa'),
 path('accounts/login/',SignIn.as_view(), name = 'login'),
+path('logout/',logout_then_login , name = 'logout'),
 path('registro/',RegistroUsuario.as_view(), name = 'registro'),
 
 ]
