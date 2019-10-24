@@ -46,14 +46,13 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-md-5 col-md-offset-2">
-			<div class="form-group">
-				<label >Rol</label>
-				<input class="form-control" type="text" name="rol">
-			</div>
-		</div>
-	</div>
+	<div>Rol</div>
+     <select name="rol" id="nombre">
+        {% for item in roles %}
+            <option value="{{item.nombre}}">{{item.nombre}}</option>
+        {% endfor %}
+    </select>
+     </div>
 
 	<div class="row">
 		<div class="col-md-5 col-md-offset-2">
