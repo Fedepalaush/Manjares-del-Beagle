@@ -7,7 +7,8 @@ class Mapa(models.Model):
     longitud = models.CharField(max_length=50, null=True)
     direccion = models.CharField(max_length=50)
 
+    
     def __str__(self):
-        return self.latitud
+        return self.direccion
     
 

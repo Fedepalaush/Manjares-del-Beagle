@@ -1,6 +1,7 @@
 
 //Iniciamos el mapa con los marcadores del JSON
 function initMap(){
+<<<<<<< HEAD
     
     var map = new google.maps.Map(document.getElementById('map'),{
       zoom: 13,
@@ -8,6 +9,12 @@ function initMap(){
     });
 
     
+=======
+  var map = new google.maps.Map(document.getElementById('map'),{
+    zoom: 13,
+    center: {lat:-54.8161769 ,lng: -68.3278668}
+  });
+>>>>>>> b499e79b1206d213891e3beecd39616c3825f587
 
     //MARCADOR 1
     var marker1 = new google.maps.Marker({
@@ -17,7 +24,7 @@ function initMap(){
     });
     //GLOBO DE INFORMACION DEL MARCADOR 1
     var texto1 = '<h3> Kuanip 189 </h3>' + '<p> Pedido N°210 </p>' + 
-                '<input type="button" value="Detalles">';
+                '<input type="button" value="Detalles">' + '<input type="button" value="Entregado">';
     var informacion1 = new google.maps.InfoWindow({
         content: texto1
     });
@@ -34,7 +41,7 @@ function initMap(){
     });
     //GLOBO DE INFORMACION DEL MARCADOR 2
     var texto2 = '<h3> Hernando de Magallanes 1120 </h3>' + '<p> Pedido N°211 </p>' + 
-                '<input type="button" value="Detalles">';
+                '<input type="button" value="Detalles">' + '<input type="button" value="Entregado">';
     var informacion2 = new google.maps.InfoWindow({
         content: texto2
     });

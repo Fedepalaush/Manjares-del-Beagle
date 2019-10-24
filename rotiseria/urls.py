@@ -2,11 +2,14 @@ from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
-from rotiseria.View.Repartidor import mapa
+from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
+<<<<<<< HEAD
 from rotiseria.View.Carrito import VistaCarrito
+=======
+from django.contrib.auth.views import logout_then_login
+>>>>>>> b499e79b1206d213891e3beecd39616c3825f587
 
-app_name = 'rotiseria'  
 urlpatterns = [
 
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
@@ -27,8 +30,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-#Esta es la view del cliente..
-path('', indexCliente, name='lista_productos'),
+path('index', indexCliente, name='lista_productos'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
@@ -36,9 +38,16 @@ path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
-path('vistaMapa',mapa, name = 'mapa'),
+<<<<<<< HEAD
+path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
 path('login',SignIn.as_view(), name = 'login'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
+=======
+path('vistaMapa/',mapa, name = 'mapa'),
+path('accounts/login/',SignIn.as_view(), name = 'login'),
+path('logout/',logout_then_login , name = 'logout'),
+path('registro/',RegistroUsuario.as_view(), name = 'registro'),
+>>>>>>> 186ac17ff88c30247a19ca22abae5481b317eba3
 
 #Vista de carrito
 path('carrito', VistaCarrito.verCarrito, name='ver_carrito'),
