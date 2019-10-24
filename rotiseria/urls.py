@@ -2,7 +2,7 @@ from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
-from rotiseria.View.Repartidor import mapa
+from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
 
 app_name = 'rotiseria'  
@@ -35,7 +35,7 @@ path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
-path('vistaMapa',mapa, name = 'mapa'),
+path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
 path('login',SignIn.as_view(), name = 'login'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
 
