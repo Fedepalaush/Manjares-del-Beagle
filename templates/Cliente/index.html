@@ -2,8 +2,6 @@
 {% load static %}
 
         {% block content %}
-     
-
 
           {% for categoria in categorias %}
             <div class="container">
@@ -15,14 +13,12 @@
                       <img src="{{producto.foto.url}}">
                       <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
                       <p>{{ producto.descripcion }}</p>
-                      <form action="{% url 'carro:añadir_carrito' producto.pk %}" method="post">
-                          <button type="button" class="btn btn-success">Añadir al carrito</button>
-                      </form>
+                      <a href="{%url 'rotiseria:añadir_carrito' producto.pk %}">Añadir</a>
                    </div>
                {% endif %}
               
             {% endfor %}
           </div>
           {% endfor %}
-               
+          <p>Usted visito esta pagina {{ num_visitas }} veces.</p>
        {% endblock %}

@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Listado de Pedidos</title>
 </head>
 <body>
 
 
-{% if pedidos %}
-    {% for pedido in pedidos %}
-        {{pedido.id}}     <br>
-        {{pedido.fecha}}     <br>
-
-        {% for producto in pedido.productos.all %}
-             {{producto.nombre  }}
-                {{producto.precioActual}} <br>
-         {% endfor %}
-
-        {{pedido.bloque.id}}     <br>
-        {{pedido.cliente.nombre}}     <br>
-        {{pedido.estadoPedido}}     <br>
-         {{pedido.total}}
-            <br>
-    {% endfor %}
-
-{% else %}
-<h1>No hay registros de Pedidos </h1>
-{% endif %}
-
+        <table class="table">
+                <thead> 
+                <tr> 
+                    <th scope="col">Prducto</th> 
+                    <th scope="col">Precio</th> 
+                </tr>
+                </thead> 
+            <tbody> 
+            {% if pedidos %} 
+                {% for pedido in pedidos %} 
+                    {% for producto in pedido.productos.all %}
+                        <tr>
+                            <td>{{producto.nombre}}</td>
+                            <td>{{producto.precioActual}}</td>
+                        </tr>  
+                    {% endfor %}
+                    <tr>
+                        <td>Total</td>
+                    </tr>
+                    
+                {% endfor %}
+                {% endif %}
+             </tbody> 
+            </table>
 </body>
 </html>

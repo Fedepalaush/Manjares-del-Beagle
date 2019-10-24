@@ -4,6 +4,7 @@ from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
 from rotiseria.View.Repartidor import mapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
+from rotiseria.View.Carrito import VistaCarrito
 
 app_name = 'rotiseria'  
 urlpatterns = [
@@ -39,4 +40,7 @@ path('vistaMapa',mapa, name = 'mapa'),
 path('login',SignIn.as_view(), name = 'login'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
 
+#Vista de carrito
+path('carrito', VistaCarrito.verCarrito, name='ver_carrito'),
+path('añadirCarrito/<int:pk>', VistaCarrito.añadirCarrito, name='añadir_carrito')
 ]

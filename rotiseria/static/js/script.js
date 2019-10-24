@@ -7,7 +7,7 @@ function initMap(){
       center: {lat:-54.8161769 ,lng: -68.3278668}
     });
 
-
+    
 
     //MARCADOR 1
     var marker1 = new google.maps.Marker({

@@ -1,0 +1,14 @@
+{% extends 'Cliente/base.html'%}
+{% load static %}
+
+{% block content %}
+     
+
+
+          {% for item in lista %}
+           
+            <h1>{{item.nombre}}</h1> <br/>
+         
+          {% endfor %}
+         
+{% endblock %}
