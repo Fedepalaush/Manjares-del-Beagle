@@ -26,7 +26,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-path('index', indexCliente, name='lista_productos'),
+path('', indexCliente, name='lista_productos'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
@@ -34,15 +34,12 @@ path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
-<<<<<<< HEAD
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
-path('login',SignIn.as_view(), name = 'login'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
-=======
-path('vistaMapa/',mapa, name = 'mapa'),
+
+path('vistaMapa/',ListarDatosMapa.as_view(), name = 'mapa'),
 path('accounts/login/',SignIn.as_view(), name = 'login'),
 path('logout/',logout_then_login , name = 'logout'),
 path('registro/',RegistroUsuario.as_view(), name = 'registro'),
->>>>>>> 186ac17ff88c30247a19ca22abae5481b317eba3
 
 ]
