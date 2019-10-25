@@ -18,6 +18,6 @@ class VistaCarrito(View):
         return render (request, "Cliente/carrito.html", {'lista': lista})
 
     def añadirCarrito(request, pk):
-        if producto not in request.session['alimentos']:
-            request.session['alimentos'] =  request.session['alimentos'] + [producto]
-        return render(request, 'Cliente/carrito.html')
+        if pk not in request.session['alimentos']:
+            request.session['alimentos'] =  request.session['alimentos'] + pk
+        return render(request, 'Cliente/index.html')

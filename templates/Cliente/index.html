@@ -13,7 +13,8 @@
                       <img src="{{producto.foto.url}}">
                       <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
                       <p>{{ producto.descripcion }}</p>
-                      <a href="{%url 'rotiseria:añadir_carrito' producto.pk %}">Añadir</a>
+                      <a href="{url 'añadir_carrito' pk=producto.pk %}">Añadir</a>
+                      
                    </div>
                {% endif %}
               

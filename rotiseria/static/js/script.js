@@ -1,20 +1,11 @@
 
 //Iniciamos el mapa con los marcadores del JSON
 function initMap(){
-<<<<<<< HEAD
-    
+   
     var map = new google.maps.Map(document.getElementById('map'),{
       zoom: 13,
       center: {lat:-54.8161769 ,lng: -68.3278668}
     });
-
-    
-=======
-  var map = new google.maps.Map(document.getElementById('map'),{
-    zoom: 13,
-    center: {lat:-54.8161769 ,lng: -68.3278668}
-  });
->>>>>>> b499e79b1206d213891e3beecd39616c3825f587
 
     //MARCADOR 1
     var marker1 = new google.maps.Marker({
