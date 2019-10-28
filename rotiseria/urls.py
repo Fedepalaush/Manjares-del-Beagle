@@ -4,6 +4,7 @@ from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
 from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
+from rotiseria.View.Carrito import VistaCarrito
 from django.contrib.auth.views import logout_then_login
 
 urlpatterns = [
@@ -26,7 +27,7 @@ path('crearCliente',CrearCliente.as_view(), name = 'crear_cliente'),
 path('listarClientes',ListarCliente.as_view(), name = 'listar_cliente'),
 path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 
-path('', indexCliente, name='lista_productos'),
+path('', indexCliente, name='indexCliente'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
@@ -35,11 +36,12 @@ path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
+path('accounts/login/',SignIn.as_view(), name = 'login'),
+path('logout/',logout_then_login, name = 'logout'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
 
-path('vistaMapa/',ListarDatosMapa.as_view(), name = 'mapa'),
-path('accounts/login/',SignIn.as_view(), name = 'login'),
-path('logout/',logout_then_login , name = 'logout'),
-path('registro/',RegistroUsuario.as_view(), name = 'registro'),
-
+  #URLs para operar con el carrito de compras
+path('carrito', VistaCarrito.obtenerCarrito, name = "carrito"),
+path('agregaritem', VistaCarrito.agregarItem, name = "agregaritem"),
+path('eliminarItem', VistaCarrito.eliminarItem, name = "eliminarItem"),
 ]

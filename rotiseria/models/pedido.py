@@ -18,3 +18,5 @@ class Pedido (models.Model):
 
     def generarTotal (self, subtotal):
         self.total=+ subtotal
+
+    

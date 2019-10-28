@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+        {% if pedidos %} 
+        {% for pedido in pedidos %}
+             <td><h3>Pedido numero {{ pedido.id }} </h3></td>
+             <td><h4>Cliente: {{pedido.cliente.nombre}}</h4></td>
+             <table class="table">
+                <thead> 
+                <tr> 
+                    <th scope="col">Prducto</th> 
+                    <th scope="col">Precio</th> 
+                </tr>
+                </thead> 
+                <tbody> 
+                    {% for producto in pedido.productos.all %}
+                        <tr>
+                            <td>{{producto.nombre}}</td>
+                            <td>{{producto.precioActual}}</td>
+                            <td>{{pedido.generarTotal}}</td>
+                        </tr>  
+                    {% endfor %}
+                    <tr>
+                        <td>Total: $ {{ pedido.total }}</td>
+                    </tr>
+                </tbody> 
+            </table>
+        {% endfor %}
+        {% endif %}
+{% endblock %}

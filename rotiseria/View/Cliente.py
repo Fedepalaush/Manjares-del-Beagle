@@ -3,24 +3,27 @@ from django.shortcuts import render, redirect
 from rotiseria.models import Cliente, Pedido, Producto, Categoría
 from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
-from cart.forms import AñadirProductoCarritoForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 def quienesSomos(request):
+    request.session.flush()
+    request.session['alimentos'] = {}
+    request.session['items'] = 0
     return render(request, 'Cliente/quienesSomos.html')
 
-
 def indexCliente(request):
+    
     categorias = Categoría.objects.all()
     productos = Producto.objects.all()
-    carro_producto_form = AñadirProductoCarritoForm()
-    contexto = {'productos': productos, 'categorias': categorias, 'carro_producto_form': carro_producto_form}
-    return render(request, 'Cliente/listaProductos.html', contexto)
+    #Numero de visitas contadas en esta variable de sesion
+    num_visitas = request.session.get('num_visitas', 0)
+    request.session['num_visitas'] = num_visitas+1
+    contexto = {'productos': productos, 'categorias': categorias, 'num_visitas': num_visitas}
+    return render(request, 'Cliente/index.html', contexto)
 
-
-@method_decorator(login_required, name='dispatch')
 class CrearCliente(CreateView):
     login_required(login_url='registro')
     model = Cliente
@@ -48,16 +51,11 @@ def BorrarCliente(request, dni):
 		return redirect('index')
 	return render(request, 'Cliente/borrarCliente.html', {'cliente':cliente})
 
-
-
 class CrearPedido(CreateView):
     model = Pedido
     form_class = PedidoForm
     template_name = 'Cliente/crearPedido.html'
     success_url = reverse_lazy('index')
-
-
-
 
 class ListarPedido(ListView):
     model = Pedido
