@@ -14,6 +14,5 @@ class ListarDatosMapa (ListView):
 
     def get(self, request, *args, **kwargs):
         mapas = Mapa.objects.all()
-        print(mapas)
         context_dict = {'mapas': mapas}
         return render(request, self.template_name, context=context_dict)

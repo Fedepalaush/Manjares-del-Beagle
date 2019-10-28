@@ -40,7 +40,8 @@ path('accounts/login/',SignIn.as_view(), name = 'login'),
 path('logout/',logout_then_login, name = 'logout'),
 path('registro',RegistroUsuario.as_view(), name = 'registro'),
 
-#Vista de carrito
-path('carrito', VistaCarrito.verCarrito, name='ver_carrito'),
-path('agregarCarrito/<int:pk>', VistaCarrito.añadirCarrito, name='añadir_carrito')
+  #URLs para operar con el carrito de compras
+path('carrito', VistaCarrito.obtenerCarrito, name = "carrito"),
+path('agregaritem', VistaCarrito.agregarItem, name = "agregaritem"),
+path('eliminarItem', VistaCarrito.eliminarItem, name = "eliminarItem"),
 ]

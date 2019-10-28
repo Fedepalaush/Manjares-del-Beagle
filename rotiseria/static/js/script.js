@@ -1,5 +1,9 @@
 
 //Iniciamos el mapa con los marcadores del JSON
+
+
+
+
 function initMap(){
    
     var map = new google.maps.Map(document.getElementById('map'),{
@@ -7,38 +11,28 @@ function initMap(){
       center: {lat:-54.8161769 ,lng: -68.3278668}
     });
 
-    //MARCADOR 1
-    var marker1 = new google.maps.Marker({
-      position: {lat:-54.8161769 ,lng: -68.3278668},
-      map: map,
-      title: 'Kuanip 189'
-    });
-    //GLOBO DE INFORMACION DEL MARCADOR 1
-    var texto1 = '<h3> Kuanip 189 </h3>' + '<p> Pedido N°210 </p>' + 
-                '<input type="button" value="Detalles">' + '<input type="button" value="Entregado">';
-    var informacion1 = new google.maps.InfoWindow({
-        content: texto1
-    });
-    marker1.addListener('click', function(){
-        informacion1.open(map,marker1);
-    });
+  var informacion = new google.maps.InfoWindow();
 
 
-    //MARCADOR 2
-    var marker2 = new google.maps.Marker({
-      position: {lat:-54.8069544 ,lng: -68.316321},
+var markers = []
+for (var i=0; i<markersData.length; i++){
+    var marker = new google.maps.Marker({
+      position: {lat:markersData[i].lat ,lng: markersData[i].long},
       map: map,
-      title: 'Hernando de Magallanes 1120'
+      data: markersData[i]
     });
-    //GLOBO DE INFORMACION DEL MARCADOR 2
-    var texto2 = '<h3> Hernando de Magallanes 1120 </h3>' + '<p> Pedido N°211 </p>' + 
-                '<input type="button" value="Detalles">' + '<input type="button" value="Entregado">';
-    var informacion2 = new google.maps.InfoWindow({
-        content: texto2
+
+    marker.addListener('click', function(){
+        var content = '<h3>' + this.data.dir + '</h3>' +
+          '<p>Pedido N°XXXXXX</p>' +
+          '<button type="button">Detalles</button>' +
+          '<button type="button">Entregado</button>';
+        informacion.setContent(content)
+        informacion.open(map, this);
     });
-    marker2.addListener('click', function(){
-        informacion2.open(map,marker2);
-    });
+
+    markers.push(marker)
+ }
 
 
     //TRAZANDO EL CAMINO ENTRE EN MARCADOR 1 Y 2
@@ -48,8 +42,8 @@ function initMap(){
         sensor: false
     }
     var objConfigDS = {
-        origin: marker1.position, //Lat o Long - String
-        destination: marker2.position,
+        origin: markers[0].position, //Lat o Long - String
+        destination: markers[1].position,
         travelMode: google.maps.TravelMode.DRIVING
     }
 
@@ -66,5 +60,4 @@ function initMap(){
     }
 
     //Se recorre un JSON para agregar marcadores
-
 }

@@ -9,13 +9,16 @@
             {% for producto in productos %}  
               
               {% if producto.categoria.nombre == categoria.nombre %} 
+                   <form method="post" action="/agregaritem">
+                   {% csrf_token %}
                    <div class="card">
                       <img src="{{producto.foto.url}}">
                       <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
                       <p>{{ producto.descripcion }}</p>
-                      <a href="{url 'añadir_carrito' pk=producto.pk %}">Añadir</a>
-                      
+                      <input id="alimento" type="hidden" name="alimento" value={{producto.id}}><br>
+                      <button type="submit" class="btn btn-warning btn-block btn-flat">Añadir</button>
                    </div>
+                  </form>
                {% endif %}
               
             {% endfor %}

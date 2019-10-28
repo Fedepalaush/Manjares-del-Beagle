@@ -117,3 +117,11 @@ class RegistroForm(UserCreationForm):
 		return user
 
 
+class PedidoAlimentoForm(forms.Form):
+
+    alimento = forms.CharField()
+    cantidad = forms.IntegerField()
+
+class ProductoIDForm(forms.Form):
+
+    alimento = forms.IntegerField()
