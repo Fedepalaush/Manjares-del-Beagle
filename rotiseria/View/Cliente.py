@@ -57,6 +57,8 @@ class CrearPedido(CreateView):
     success_url = reverse_lazy('index')
 
 
+
+
 class ListarPedido(ListView):
     model = Pedido
     template_name = "Cliente/listarPedidos.html"
