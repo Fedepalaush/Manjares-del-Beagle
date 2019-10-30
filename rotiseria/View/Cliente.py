@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 def quienesSomos(request):
     request.session.flush()
@@ -59,10 +60,18 @@ class CrearPedido(CreateView):
 
 class ListarPedido(ListView):
     model = Pedido
-    template_name = "Cliente/listarPedidos.html"
+    template_name = "Recepcionista/listarPedidos.html"
     form_class = PedidoForm
 
     def get(self, request, *args, **kwargs):
+        #Con esto le paso el total como unico valor sumado de todos los productos del pedido
         pedidos = Pedido.objects.all()
-        context_dict = {'pedidos': pedidos}
+        total = 0
+        for pedido in pedidos:
+            alimentos = Producto.objects.all()
+            for producto in alimentos:
+                alimento=get_object_or_404(Producto, id = producto.id)
+                subtotal = getattr(alimento, 'precioActual')
+                total += subtotal
+        context_dict = {'pedidos': pedidos, 'total': total}
         return render(request, self.template_name, context=context_dict)
