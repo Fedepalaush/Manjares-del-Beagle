@@ -1,12 +1,8 @@
 {% extends 'Cliente/base.html'%}
 
 {% block content %}
-  <h1>Tu carrito de compras</h1>
-  
-  {% for datos in lista %}
-    <h1> {{datos.alimentoNombre}} </h1> 
-  {% endfor %}
-
+<h1>Tu carrito de compras</h1>
+<br>
 <div class="table-responsive" id="tableContainer">
     <table id="table" class="table table-striped table-bordered border-warning" style="max-width:100%">
         <thead>
@@ -19,8 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for datos in lista %}
-                  <h1>{{ datos.alimentoNombre }}</h1>
+                {% for datos in lista %}
                 <tr>
                     <form action="/eliminarItem" method="post">
                         {% csrf_token %}
@@ -32,9 +27,28 @@
                         <td><button class="btn btn-danger btn-flat" type="submit">Quitar</button></td>
                     </form>
                 </tr>
-            {% endfor %}
-        </tbody>
+                {% endfor %}
+                <td>Total: ${{total}}</td>
+                <td><button type="button" class="btn btn-success">Confirmar Pedido</button></td>
+            </tbody>
     </table>
-    <br>
-</div><br>
+</div>
+<br>
+<br>
+<a href="{% url 'indexCliente' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Seguir comprando</a>
+<br>
+<form>
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Nombre y Apellido</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1" >
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Celular</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" >
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Descripcion</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+</form>
 {% endblock %}
