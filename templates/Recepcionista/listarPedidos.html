@@ -8,19 +8,22 @@
                 <thead> 
                 <tr> 
                     <th scope="col">Prducto</th> 
+                    <th scope="col">Cantidad</th> 
                     <th scope="col">Precio</th> 
+                    <th scope="col">Subtotal</th> 
                 </tr>
                 </thead> 
                 <tbody> 
-                    {% for producto in pedido.productos.all %}
+                    {% for producto in lista %}
                         <tr>
-                            <td>{{producto.nombre}}</td>
-                            <td>{{producto.precioActual}}</td>
-                            <td>{{pedido.generarTotal}}</td>
+                            <td>{{producto.alimentoNombre}}</td>
+                            <td>{{producto.precio}}</td>
+                            <td>{{producto.cantidadl}}</td>
+                            <td>{{pedido.subtotal}}</td>
                         </tr>  
                     {% endfor %}
                     <tr>
-                        <td>Total: $ {{ total }}</td>
+                        <td>Total: $ {{ pedido.total }}</td>
                     </tr>
                 </tbody> 
             </table>

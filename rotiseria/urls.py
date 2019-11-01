@@ -44,4 +44,5 @@ path('registro',RegistroUsuario.as_view(), name = 'registro'),
 path('carrito', VistaCarrito.obtenerCarrito, name = "carrito"),
 path('agregaritem', VistaCarrito.agregarItem, name = "agregaritem"),
 path('eliminarItem', VistaCarrito.eliminarItem, name = "eliminarItem"),
+path('confirmarPedido', VistaCarrito.confirmarPedido, name = "confirmarPedido"),
 ]

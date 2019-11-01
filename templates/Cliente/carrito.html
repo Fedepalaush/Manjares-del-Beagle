@@ -29,13 +29,13 @@
                 </tr>
                 {% endfor %}
                 <td>Total: ${{total}}</td>
-                <td><button type="button" class="btn btn-success">Confirmar Pedido</button></td>
             </tbody>
     </table>
 </div>
 <br>
 <br>
 <a href="{% url 'indexCliente' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Seguir comprando</a>
+
 <br>
 <form>
     <div class="form-group">
@@ -50,5 +50,33 @@
       <label for="exampleFormControlTextarea1">Descripcion</label>
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
+    <form method="get" action="http://aprenderaprogramar.com/action.php">
+        Entrega:
+        
+        <br />
+        
+        <input name="intereses" type="radio" value="rbipeliculas" />En local
+        <br />  
+        <input name="intereses" type="radio" value="rbilibros" />En domicilio
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Direccion</label>
+            <input id="searchTextField" type="text" size="50" placeholder="Ingrese su dirección..." autocomplete="on" runat="server" />
+        </div>
+        
+        </form>
+
 </form>
+<div id="confirm-container">
+    <form action="/confirmarPedido" method="post">
+        {% csrf_token %}
+            {% if total == 0 %}
+                <p><b>Total: ${{total}}</b>&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn btn-warning btn-flat" id='confirmar' type="submit" disabled>Confirmar pedido</button></p>
+            {% else %}
+                <p><b>Total: ${{total}}</b>&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn btn-warning btn-flat" id='confirmar' type="submit">Confirmar pedido</button></p>
+            {% endif %}
+    </form>
+</div>
+<td><button type="button" class="btn btn-success">Confirmar Pedido</button></td>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5bJ7e24SdcnhOtbqPMfC30MrOlhLyMTI&libraries=places"></script>
 {% endblock %}
+

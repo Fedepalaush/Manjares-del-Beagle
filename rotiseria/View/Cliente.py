@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, ListView
 from django.shortcuts import render, redirect
-from rotiseria.models import Cliente, Pedido, Producto, Categoría
+from rotiseria.models import Cliente, Pedido, Producto, Categoría, PedidoProducto
 from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -11,12 +11,14 @@ from django.shortcuts import get_object_or_404
 
 def quienesSomos(request):
     request.session.flush()
-    request.session['alimentos'] = {}
-    request.session['items'] = 0
     return render(request, 'Cliente/quienesSomos.html')
 
 def indexCliente(request):
     
+    if 'alimentos'not in request.session:
+            request.session['alimentos'] = {}
+            request.session['items'] = 0
+            
     categorias = Categoría.objects.all()
     productos = Producto.objects.all()
     #Numero de visitas contadas en esta variable de sesion
@@ -66,12 +68,7 @@ class ListarPedido(ListView):
     def get(self, request, *args, **kwargs):
         #Con esto le paso el total como unico valor sumado de todos los productos del pedido
         pedidos = Pedido.objects.all()
-        total = 0
-        for pedido in pedidos:
-            alimentos = Producto.objects.all()
-            for producto in alimentos:
-                alimento=get_object_or_404(Producto, id = producto.id)
-                subtotal = getattr(alimento, 'precioActual')
-                total += subtotal
-        context_dict = {'pedidos': pedidos, 'total': total}
+        productos = Producto.objects.all()
+        pedidoProducto = PedidoProducto.objects.all()
+        context_dict = {'pedidos': pedidos, 'lista': lista, 'total': total}
         return render(request, self.template_name, context=context_dict)
