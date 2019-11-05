@@ -13,6 +13,7 @@ class Pedido (models.Model):
     bloque = models.ForeignKey(Bloque, on_delete=models.CASCADE, blank=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     estadoPedido= models.ForeignKey(EstadoPedido, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=200, blank = True)
 
     def __str__(self):
         return str(self.id)

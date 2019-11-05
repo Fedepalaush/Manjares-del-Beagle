@@ -68,7 +68,6 @@ class ListarPedido(ListView):
     def get(self, request, *args, **kwargs):
         #Con esto le paso el total como unico valor sumado de todos los productos del pedido
         pedidos = Pedido.objects.all()
-        productos = Producto.objects.all()
-        pedidoProducto = PedidoProducto.objects.all()
-        context_dict = {'pedidos': pedidos, 'lista': lista, 'total': total}
+        pedidoProductos = PedidoProducto.objects.all()
+        context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
         return render(request, self.template_name, context=context_dict)

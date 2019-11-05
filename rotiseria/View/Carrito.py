@@ -4,8 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 import json as simplejson
 from rotiseria.models import Producto, Bloque, Pedido, EstadoPedido, Cliente, PedidoProducto
-from rotiseria.forms import PedidoAlimentoForm, ProductoIDForm, ProductoIDForm
+from rotiseria.forms import PedidoAlimentoForm, ProductoIDForm, ProductoIDForm, DatosClienteForm
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_protect
+from django.utils import timezone
 
 #Vista del carrito donde se definen varios metodos importantes
 class VistaCarrito(View):
@@ -44,7 +46,6 @@ class VistaCarrito(View):
         if request.method == 'POST':
             form = PedidoAlimentoForm(request.POST)
             if form.is_valid():
-                print ('formulario valido')
                 contenido = {
                     'alimentoID' : form.cleaned_data['alimento'],
                     'cantidad' : form.cleaned_data['cantidad']
@@ -68,16 +69,31 @@ class VistaCarrito(View):
                 request.session['alimentos'].pop(str(id),None)
                 return HttpResponseRedirect('/carrito')
 
+    @csrf_protect
     def confirmarPedido(request):
 
         if request.method == 'POST':
+            form = DatosClienteForm(request.POST)
+            #Verificamos si el cliente existe, sino creamos uno
+            if form.is_valid():
+                nombreApellido = form.cleaned_data['nombreApellido']
+                celular = form.cleaned_data['celular']
+                descripcion = form.cleaned_data['descripcion']
+                direccion = form.cleaned_data['direccion']
+                clientes = Cliente.objects.all()
+                cli = 0
+                for cliente in clientes:
+                    if cliente.telefono == celular: 
+                        cli = cliente
+                if cli == 0:
+                    cli = Cliente.objects.create(nombre = nombreApellido, telefono = celular)
+                    cli.save()
             alimentos = request.session['alimentos']
             bloque = Bloque.objects.get(id = 1)
-            cliente = Cliente.objects.get(nombre = 'sebastian')
-            estadoPedido = EstadoPedido.objects.create()
-            pedido = Pedido.objects.create(bloque = bloque, cliente = cliente, estadoPedido = estadoPedido)
+            estadoPedido = EstadoPedido.objects.get(estado = 'pendiente')
+            pedido = Pedido.objects.create(bloque = bloque, cliente = cli, estadoPedido = estadoPedido, descripcion = descripcion)
             total = 0
-            #datos[0] -> id alimentoCarta // datos[1] -> cantidad
+            #datos[0] -> id alimento // datos[1] -> cantidad de alimentos
             for alimentoID, datos  in alimentos.items():
                 producto = Producto.objects.get(id = int(alimentoID))
                 subtotal = getattr(producto, 'precioActual')*datos[1]
@@ -87,7 +103,9 @@ class VistaCarrito(View):
                                                                precioVariable= precioActual, subtotal=subtotal,
                                                                cantidad=datos[1])
             pedido.total = total
+            pedido.cliente = cli
             pedido.save()
             request.session.flush()
-            messages.success(request, 'Gracias por su compra. En instantes llegará su pedido')
-            return HttpResponseRedirect('/')
+                #cliente = Cliente.objects.create(nombre = nombreApellido, telefono = celular)
+
+        return HttpResponseRedirect('/')

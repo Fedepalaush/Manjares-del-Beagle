@@ -58,13 +58,11 @@ class ClienteForm(forms.ModelForm):
 		model = Cliente
 
 		fields = [
-			'dni',
 			'nombre',
 			'telefono',
 
 		]
 		labels = {
-			'dni': 'DNI',
 			'nombre': 'Nombre',
 			'telefono': 'Telefono',}
 
@@ -125,3 +123,10 @@ class PedidoAlimentoForm(forms.Form):
 class ProductoIDForm(forms.Form):
 
     alimento = forms.IntegerField()
+
+class DatosClienteForm(forms.Form):
+
+	nombreApellido = forms.CharField()
+	celular = forms.IntegerField()
+	descripcion = forms.CharField()
+	direccion = forms.CharField()

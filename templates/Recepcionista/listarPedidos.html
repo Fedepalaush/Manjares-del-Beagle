@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+
+        <h1>Pedidos para confirmar</h1>
+
         {% if pedidos %} 
         {% for pedido in pedidos %}
+            {% if pedido.estadoPedido.estado == 'pendiente' %}
              <td><h3>Pedido numero {{ pedido.id }} </h3></td>
              <td><h4>Cliente: {{pedido.cliente.nombre}}</h4></td>
              <table class="table">
@@ -14,19 +18,22 @@
                 </tr>
                 </thead> 
                 <tbody> 
-                    {% for producto in lista %}
-                        <tr>
-                            <td>{{producto.alimentoNombre}}</td>
-                            <td>{{producto.precio}}</td>
-                            <td>{{producto.cantidadl}}</td>
-                            <td>{{pedido.subtotal}}</td>
-                        </tr>  
+                    {% for pedidoProducto in pedidoProductos %}
+                        {% if pedido.id == pedidoProducto.pedido.id %}
+                          <tr>
+                            <td>{{pedidoProducto.producto.nombre}}</td>
+                            <td>{{pedidoProducto.cantidad}}</td>
+                            <td>{{pedidoProducto.precioVariable}}</td>
+                            <td>{{pedidoProducto.subtotal}}</td>
+                          </tr>  
+                        {% endif %}
                     {% endfor %}
                     <tr>
                         <td>Total: $ {{ pedido.total }}</td>
                     </tr>
                 </tbody> 
             </table>
+            {% endif %}
         {% endfor %}
         {% endif %}
 {% endblock %}
