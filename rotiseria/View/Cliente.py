@@ -6,7 +6,10 @@ from django.urls import reverse_lazy
 from cart.forms import AñadirProductoCarritoForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+import mercadopago
+import json
 
+mp = mercadopago.MP("2976477610493912", "36kgwdIqyhQeJylWXK8ftz692RzBWIYg")
 
 def quienesSomos(request):
     return render(request, 'Cliente/quienesSomos.html')
@@ -66,3 +69,17 @@ class ListarPedido(ListView):
         pedidos = Pedido.objects.all()
         context_dict = {'pedidos': pedidos}
         return render(request, self.template_name, context=context_dict)
+
+    def index(request, **kwargs):
+        preference = {
+            "items": [
+                {
+                    "title": "Manjares del Beagle",
+                    "quantity": 2,
+                    "currency_id": "ARS",
+                    "unit_price": 250.50
+                }
+            ]
+        }
+        preferenceResult = mp.create_preference(preference)
+        return json.dumps(preferenceResult, indent=4)
