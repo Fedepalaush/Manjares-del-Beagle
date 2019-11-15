@@ -75,7 +75,6 @@ class PedidoForm(forms.ModelForm):
 			'total',
 			'productos',
 			'bloque',
-			'cliente',
 			'estadoPedido',
 		]
 		labels = {
@@ -83,7 +82,6 @@ class PedidoForm(forms.ModelForm):
 			'total': 'Total',
 			'productos':'Productos',
 			'bloque': 'Bloque',
-			'cliente': 'Cliente',
 			'estadoPedido': 'EstadoPedido'}
 
 
@@ -130,3 +128,5 @@ class DatosClienteForm(forms.Form):
 	celular = forms.IntegerField()
 	descripcion = forms.CharField()
 	direccion = forms.CharField()
+	latitud = forms.CharField()
+	longitud = forms.CharField()

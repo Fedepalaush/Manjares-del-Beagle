@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import View
+from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 import json as simplejson
-from rotiseria.models import Producto, Bloque, Pedido, EstadoPedido, Cliente, PedidoProducto
+from rotiseria.models import Producto, Bloque, Pedido, EstadoPedido, Cliente, PedidoProducto, Mapa
 from rotiseria.forms import PedidoAlimentoForm, ProductoIDForm, ProductoIDForm, DatosClienteForm
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -74,24 +74,34 @@ class VistaCarrito(View):
 
         if request.method == 'POST':
             form = DatosClienteForm(request.POST)
-            #Verificamos si el cliente existe, sino creamos uno
             if form.is_valid():
+                print ('form valido')
                 nombreApellido = form.cleaned_data['nombreApellido']
                 celular = form.cleaned_data['celular']
                 descripcion = form.cleaned_data['descripcion']
                 direccion = form.cleaned_data['direccion']
-                clientes = Cliente.objects.all()
-                cli = 0
-                for cliente in clientes:
-                    if cliente.telefono == celular: 
-                        cli = cliente
-                if cli == 0:
-                    cli = Cliente.objects.create(nombre = nombreApellido, telefono = celular)
-                    cli.save()
+                latitud = form.cleaned_data['latitud']
+                longitud = form.cleaned_data['longitud']
+                #Obtenemos solo la direccion con el numero, nada mas...
+                direcccionActual = VistaCarrito.obtenerDireccion(direccion)
+                print (direcccionActual)
+                estaEnbd = False
+                if direccionActual == " ": #Si la direccion es vacia es xq retira en la rotiseria
+                    direccionActual = Mapa.objects.get(direccion = 'Belgrano 43')
+                else:
+                    #Si la direccion esta cargada en el modelo mapa, lo traemos y hacemos la relacion de pedido con mapa 
+                    direciones = Mapa.objects.all()
+                    for d in direcciones:
+                        if d == direccionActual:
+                            direccionActual = d
+                            estaEnbd = True
+                    if estaEnbd == False:
+                        direccionActual = Mapa.objects.create(latitud = latitud, longitud = longitud, direccion = direccionActual)
+                        direccionActual.save()
             alimentos = request.session['alimentos']
             bloque = Bloque.objects.get(id = 1)
             estadoPedido = EstadoPedido.objects.get(estado = 'pendiente')
-            pedido = Pedido.objects.create(bloque = bloque, cliente = cli, estadoPedido = estadoPedido, descripcion = descripcion)
+            pedido = Pedido.objects.create(bloque = bloque, nombre_cliente = nombreApellido, estadoPedido = estadoPedido, descripcion = descripcion, telefono_cliente = celular, mapa = direccionActual)
             total = 0
             #datos[0] -> id alimento // datos[1] -> cantidad de alimentos
             for alimentoID, datos  in alimentos.items():
@@ -103,9 +113,16 @@ class VistaCarrito(View):
                                                                precioVariable= precioActual, subtotal=subtotal,
                                                                cantidad=datos[1])
             pedido.total = total
-            pedido.cliente = cli
             pedido.save()
             request.session.flush()
-                #cliente = Cliente.objects.create(nombre = nombreApellido, telefono = celular)
 
         return HttpResponseRedirect('/')
+
+    def obtenerDireccion(direccion):
+        i = 0
+        d = ' '
+        if direccion != '-':
+            while direccion[i] != ',':
+                d = d + direccion[i]
+                i = i + 1
+        return d
