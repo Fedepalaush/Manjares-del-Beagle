@@ -28,54 +28,5 @@
 <h1>No hay registros de Pedidos </h1>
 {% endif %}
 
-
-<!-- Esto es un comentario -->
-          <!-- BOTON PAGAR MERCADO PAGO -->
-
-          <table>
-            <tr>
-              <th>Producto</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-            </tr>
-            <tr>
-              <td id="P_producto">Pizza</td>
-              <td id="P_cantidad">2</td>
-              <td id="P_precio">$399.55</td>
-            </tr>
-          </table>
-          <form>
-              <fieldset style="width: 400px">
-                  <legend>Entrega</legend>
-                  <input name="entrega" type="radio" value="enlocal" onclick="ocultarDireccion()" />En local. <br>
-              <input name="entrega" type="radio" value="endomicilio" onclick="mostrarDireccion()" />En domicilio.
-              <input id="buscarTextField" type="text" size="50" placeholder="Ingrese su dirección..." autocomplete="on" runat="server" style="display: none" />
-              </fieldset>
-              <fieldset style="width: 400px">
-                  <legend>Pago</legend>
-                  <input name="pago" type="radio" value="efectivo" />Efectivo. <br>
-              <input name="pago" type="radio" value="tarjeta" />Tarjeta.
-              </fieldset>
-          </form>
-        
-          <form action="/procesar-pago" method="POST">
-            <script
-             src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-             data-preference-id="${preference.id}">
-            </script>
-          </form>
-        
-          <script>
-          function mostrarDireccion() {
-              document.getElementById("buscarTextField").style.display= "inline";
-          }
-          function ocultarDireccion() {
-              document.getElementById("buscarTextField").style.display= "none";
-          }
-          </script>
-
-          <!-- FIN MERCADO PAGO -->
-          <!-- COPIAR EN LA VISTA DEL FORMULARIO CLIENTE -->
-
 </body>
 </html>

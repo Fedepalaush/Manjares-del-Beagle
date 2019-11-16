@@ -1,29 +1,29 @@
 from django.views.generic import CreateView, ListView
 from django.shortcuts import render, redirect
-from rotiseria.models import Cliente, Pedido, Producto, Categoría
+from rotiseria.models import Cliente, Pedido, Producto, Categoría, PedidoProducto
 from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
-from cart.forms import AñadirProductoCarritoForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-import mercadopago
-import json
-
-mp = mercadopago.MP("2976477610493912", "36kgwdIqyhQeJylWXK8ftz692RzBWIYg")
 
 def quienesSomos(request):
+    request.session.flush()
     return render(request, 'Cliente/quienesSomos.html')
 
-
 def indexCliente(request):
+    
+    if 'alimentos'not in request.session:
+            request.session['alimentos'] = {}
+            request.session['items'] = 0
+            
     categorias = Categoría.objects.all()
     productos = Producto.objects.all()
-    carro_producto_form = AñadirProductoCarritoForm()
-    contexto = {'productos': productos, 'categorias': categorias, 'carro_producto_form': carro_producto_form}
-    return render(request, 'Cliente/listaProductos.html', contexto)
+    #Numero de visitas contadas en esta variable de sesion
+    num_visitas = request.session.get('num_visitas', 0)
+    request.session['num_visitas'] = num_visitas+1
+    contexto = {'productos': productos, 'categorias': categorias, 'num_visitas': num_visitas}
+    return render(request, 'Cliente/index.html', contexto)
 
-
-@method_decorator(login_required, name='dispatch')
 class CrearCliente(CreateView):
     login_required(login_url='registro')
     model = Cliente
@@ -51,35 +51,20 @@ def BorrarCliente(request, dni):
 		return redirect('index')
 	return render(request, 'Cliente/borrarCliente.html', {'cliente':cliente})
 
-
-
 class CrearPedido(CreateView):
     model = Pedido
     form_class = PedidoForm
     template_name = 'Cliente/crearPedido.html'
     success_url = reverse_lazy('index')
 
-
 class ListarPedido(ListView):
     model = Pedido
-    template_name = "Cliente/listarPedidos.html"
+    template_name = "Recepcionista/listarPedidos.html"
     form_class = PedidoForm
 
     def get(self, request, *args, **kwargs):
+        #Con esto le paso el total como unico valor sumado de todos los productos del pedido
         pedidos = Pedido.objects.all()
-        context_dict = {'pedidos': pedidos}
+        pedidoProductos = PedidoProducto.objects.all()
+        context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
         return render(request, self.template_name, context=context_dict)
-
-    def index(request, **kwargs):
-        preference = {
-            "items": [
-                {
-                    "title": "Manjares del Beagle",
-                    "quantity": 2,
-                    "currency_id": "ARS",
-                    "unit_price": 250.50
-                }
-            ]
-        }
-        preferenceResult = mp.create_preference(preference)
-        return json.dumps(preferenceResult, indent=4)

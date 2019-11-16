@@ -1,23 +1,13 @@
 
 //Iniciamos el mapa con los marcadores del JSON
-
-function mostrar() {
-  document.getElementById('contenedor').style.height = '300px';
-  document.getElementById('abrir').style.display = 'none';
-  document.getElementById('cerrar').style.display = 'inline';
-}
-
-function ocultar() {
-    document.getElementById('contenedor').style.height = '0';
-    document.getElementById('abrir').style.display = 'inline';
-    document.getElementById('cerrar').style.display = 'none';
-}
+var panorama;
 
 function initMap(){
   var ushuaia = {lat:-54.8161769 ,lng: -68.3278668};
   var map = new google.maps.Map(document.getElementById('map'),{
     zoom: 13,
-    center: ushuaia
+    center: ushuaia,
+    streetViewControl: false
   });
 
   //agrego letras a los marcadores
@@ -45,8 +35,9 @@ function initMap(){
   markers.push(markerInicio);
   for (var i=0; i<markersData.length; i++){
     //MARKER: UN MARCADOR
+    var punto = {lat:markersData[i].lat ,lng: markersData[i].long};
     var marker = new google.maps.Marker({
-      position: {lat:markersData[i].lat ,lng: markersData[i].long},
+      position: punto,
       label: labels[labelIndex++ % labels.length],
       map: map,
       data: markersData[i]
@@ -54,7 +45,9 @@ function initMap(){
     marker.addListener('click', function(){
       var content = '<h3>' + this.data.dir + '</h3>' +
         '<p>Pedido N°XXXXXX</p>' +
-        '<button type="button" id="abrir" href="javascript:void(0)" onclick="mostrar()">Detalles</button>' +
+        '<button type="button" id="abrir" onclick="mostrar()">Detalles</button>' +
+        '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
+        '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
         '<button type="button">Entregado</button>';
         informacion.setContent(content);
         informacion.open(map, this);
@@ -62,7 +55,12 @@ function initMap(){
     markers.push(marker)
   }
 
-  
+  //streetView
+  panorama = map.getStreetView();
+  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+    heading: 265,
+    pitch: 0
+  }));
 
   //TRAZANDO EL CAMINO ENTRE EL MARCADOR INICIO -- (marcadores de por medio) -- FIN
   var objConfigDR = {
@@ -95,4 +93,17 @@ function initMap(){
       }
   }
   
+}
+
+function street() {
+  ocultar();
+  var toggle = window.panorama.getVisible();
+  if (toggle == false) {
+    var latitud = parseFloat(document.getElementById('latitud').value);
+    var longitud = parseFloat(document.getElementById('longitud').value);
+    window.panorama.setVisible(true);
+    window.panorama.setPosition({lat: latitud, lng: longitud});
+  } else {
+    window.panorama.setVisible(false);
+  }
 }

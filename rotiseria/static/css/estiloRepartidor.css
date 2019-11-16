@@ -15,7 +15,7 @@
 	right: 0;
 	bottom: 0;
 	z-index: 1;
-	background-color: #2bab80;
+	background-color: #b0e4d2;
 	overflow-x: hidden;
 	transition: 0.4s;
 	padding: 0;
@@ -39,8 +39,21 @@
 .contenedor a{
 	font-size: 120%;
 	color:#fff;
-	background-color: #2bab80;
+	background-color:#b0e4d2;
 	text-decoration: none;
+}
+
+.contenedor img{
+	position: relative;
+	/* ANCHO */
+	width: 80%;
+	/* ALTO */
+	height: auto;
+}
+
+#imagen {
+	text-align: center;
+	border: black 20px;
 }
 
 #abrir {

@@ -6,6 +6,19 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from rotiseria.models import Rol
 from django.shortcuts import render
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+
+def superuser_required():
+    def wrapper(wrapped):
+        class WrappedClass(UserPassesTestMixin, wrapped):
+            def test_func(self):
+                return self.request.user.is_superuser
+
+        return WrappedClass
+    return wrapper
+
 
 
 class SignIn(FormView):
@@ -20,7 +33,7 @@ class SignIn(FormView):
         login(self.request, form.get_user())
         return super(SignIn, self).form_valid(form)
 
-
+@superuser_required()
 class RegistroUsuario(CreateView):
     model = User
     template_name = "Sesion/registro.html"
