@@ -75,33 +75,31 @@ class VistaCarrito(View):
         if request.method == 'POST':
             form = DatosClienteForm(request.POST)
             if form.is_valid():
-                print ('form valido')
                 nombreApellido = form.cleaned_data['nombreApellido']
                 celular = form.cleaned_data['celular']
                 descripcion = form.cleaned_data['descripcion']
-                direccion = form.cleaned_data['direccion']
+                dire = form.cleaned_data['direccion']
                 latitud = form.cleaned_data['latitud']
                 longitud = form.cleaned_data['longitud']
                 #Obtenemos solo la direccion con el numero, nada mas...
-                direcccionActual = VistaCarrito.obtenerDireccion(direccion)
-                print (direcccionActual)
+                direccion = VistaCarrito.obtenerDireccion(dire)
                 estaEnbd = False
-                if direccionActual == " ": #Si la direccion es vacia es xq retira en la rotiseria
-                    direccionActual = Mapa.objects.get(direccion = 'Belgrano 43')
+                if direccion == '': #Si la direccion es vacia es xq retira en la rotiseria
+                    direccionCliente = Mapa.objects.get(direccion = 'General Manuel Belgrano 43')
                 else:
                     #Si la direccion esta cargada en el modelo mapa, lo traemos y hacemos la relacion de pedido con mapa 
-                    direciones = Mapa.objects.all()
+                    direcciones = Mapa.objects.all()
                     for d in direcciones:
-                        if d == direccionActual:
-                            direccionActual = d
+                        if d.direccion == direccion:
+                            direccionCliente = d
                             estaEnbd = True
                     if estaEnbd == False:
-                        direccionActual = Mapa.objects.create(latitud = latitud, longitud = longitud, direccion = direccionActual)
-                        direccionActual.save()
+                        direccionCliente = Mapa.objects.create(latitud = latitud, longitud = longitud, direccion = direccion)
+                        direccionCliente.save()
             alimentos = request.session['alimentos']
             bloque = Bloque.objects.get(id = 1)
             estadoPedido = EstadoPedido.objects.get(estado = 'pendiente')
-            pedido = Pedido.objects.create(bloque = bloque, nombre_cliente = nombreApellido, estadoPedido = estadoPedido, descripcion = descripcion, telefono_cliente = celular, mapa = direccionActual)
+            pedido = Pedido.objects.create(bloque = bloque, nombre_cliente = nombreApellido, estadoPedido = estadoPedido, descripcion = descripcion, telefono_cliente = celular, mapa = direccionCliente)
             total = 0
             #datos[0] -> id alimento // datos[1] -> cantidad de alimentos
             for alimentoID, datos  in alimentos.items():
@@ -118,11 +116,11 @@ class VistaCarrito(View):
 
         return HttpResponseRedirect('/')
 
-    def obtenerDireccion(direccion):
+    def obtenerDireccion(dire):
         i = 0
-        d = ' '
-        if direccion != '-':
-            while direccion[i] != ',':
-                d = d + direccion[i]
+        d = ''
+        if dire != '-':
+            while dire[i] != ',':
+                d = d + dire[i]
                 i = i + 1
         return d
