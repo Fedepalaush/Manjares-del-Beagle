@@ -1,4 +1,3 @@
-
 //Iniciamos el mapa con los marcadores del JSON
 var panorama;
 
@@ -7,7 +6,7 @@ function initMap(){
   var map = new google.maps.Map(document.getElementById('map'),{
     zoom: 13,
     center: ushuaia,
-    streetViewControl: false
+    streetViewControl: false,
   });
 
   //agrego letras a los marcadores
@@ -48,6 +47,7 @@ function initMap(){
         '<button type="button" id="abrir" onclick="mostrar()">Detalles</button>' +
         '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
         '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
+        '<button type="button" id="abrir" href="javascript:void(0)" onclick="mostrar()">Detalles</button>' +
         '<button type="button">Entregado</button>';
         informacion.setContent(content);
         informacion.open(map, this);
@@ -61,6 +61,7 @@ function initMap(){
     heading: 265,
     pitch: 0
   }));
+  
 
   //TRAZANDO EL CAMINO ENTRE EL MARCADOR INICIO -- (marcadores de por medio) -- FIN
   var objConfigDR = {
