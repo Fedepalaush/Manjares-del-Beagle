@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Pedidos</title>
+</head>
+<body>
+
+
+{% if pedidos %}
+    {% for pedido in pedidos %}
+        {{pedido.id}}     <br>
+        {{pedido.fecha}}     <br>
+
+        {% for producto in pedido.productos.all %}
+             {{producto.nombre  }}
+                {{producto.precioActual}} <br>
+         {% endfor %}
+
+        {{pedido.bloque.id}}     <br>
+        {{pedido.cliente.nombre}}     <br>
+        {{pedido.estadoPedido}}     <br>
+         {{pedido.total}}
+            <br>
+    {% endfor %}
+
+{% else %}
+<h1>No hay registros de Pedidos </h1>
+{% endif %}
+
+</body>
+</html>

@@ -52,7 +52,7 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
     <input id="celular" type="text" name="celular">
 
     <label for="descripcion">Descripcion: </label>
-    <input id="descripcion" type="text" name="descripcion" value=" ">
+    <input id="descripcion" type="text" name="descripcion">
 
     <fieldset style="width: 400px; border:1px solid black">
         <legend class="w-auto">Entrega</legend>
@@ -69,6 +69,31 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
 
 </form>
 
+    <script>
+        function obtenerDireccion() {
+            if (document.getElementById('direccion').value == "") {
+                document.getElementById('direccion').value = "-";
+                document.getElementById('latitud').value = "0";
+                document.getElementById('longitud').value = "0";
+            }
+            if (document.getElementById('descripcion').value == ""){
+                document.getElementById('descripcion').value = "-";
+            }
+        }
+    </script>
+
+<!-- BOTON PAGAR MERCADO PAGO -->
+
+<form action="/carrito" method="post">
+    {% csrf_token %}
+    <script
+     src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+     data-preference-id="${{preference_id}}">
+    </script>
+  </form>
+
+<!-- FIN MERCADO PAGO -->
+
 <script>
     function mostrarDireccion() {
         document.getElementById("direccion").style.display= "inline";
@@ -76,13 +101,7 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
     function ocultarDireccion() {
         document.getElementById("direccion").style.display= "none";
     }
-    function obtenerDireccion() {
-        if (document.getElementById('direccion').value == "") {
-            document.getElementById('direccion').value = "-";
-        }
-    }
 </script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5bJ7e24SdcnhOtbqPMfC30MrOlhLyMTI&libraries=places"></script>
 {% endblock %}
-

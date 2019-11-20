@@ -5,9 +5,6 @@ from rotiseria.forms import ClienteForm, PedidoForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib import messages
-from django.shortcuts import get_object_or_404
 
 def quienesSomos(request):
     request.session.flush()

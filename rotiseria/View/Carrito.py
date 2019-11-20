@@ -8,11 +8,32 @@ from rotiseria.forms import PedidoAlimentoForm, ProductoIDForm, ProductoIDForm, 
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
+import mercadopago
+import json
+
+mp = mercadopago.MP("2976477610493912", "36kgwdIqyhQeJylWXK8ftz692RzBWIYg")
 
 #Vista del carrito donde se definen varios metodos importantes
 class VistaCarrito(View):
 
     def obtenerCarrito(request):
+        p = Pedido.objects.all()
+        longitud = len(p)
+
+        ultimo_pedido = p[longitud-1]
+
+        preference = {
+            "items": [
+                {
+                    "title": "Manjares del Beagle",
+                    "quantity": 1,
+                    "currency_id": "ARS",
+                    "unit_price": float(ultimo_pedido.total)
+                }
+            ]
+        }
+        preferenceResult = mp.create_preference(preference)
+
         #Si la 
         if 'alimentos' not in request.session:
             HttpResponseRedirect('/')
@@ -21,7 +42,6 @@ class VistaCarrito(View):
 
             form = ProductoIDForm()
             alimentos = request.session['alimentos']
-            print (alimentos)
             lista = []
             total = 0
             #datos[0] -> id alimentoCarta // datos[1] -> cantidad
@@ -39,6 +59,7 @@ class VistaCarrito(View):
                 'form'  : form,
                 'lista' : lista,
                 'total' : total,
+                'preference_id' : json.dumps(preferenceResult['response']['id']),
             }) 
 
     def agregarItem(request):
@@ -83,6 +104,7 @@ class VistaCarrito(View):
                 longitud = form.cleaned_data['longitud']
                 #Obtenemos solo la direccion con el numero, nada mas...
                 direccion = VistaCarrito.obtenerDireccion(dire)
+                descripcion = VistaCarrito.obtenerDescripcion(descripcion)
                 estaEnbd = False
                 if direccion == '': #Si la direccion es vacia es xq retira en la rotiseria
                     direccionCliente = Mapa.objects.get(direccion = 'General Manuel Belgrano 43')
@@ -124,3 +146,9 @@ class VistaCarrito(View):
                 d = d + dire[i]
                 i = i + 1
         return d
+
+    def obtenerDescripcion(desc):
+        if desc == '-':
+            desc = ""
+        return desc
+    

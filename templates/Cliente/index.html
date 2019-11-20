@@ -1,29 +1,31 @@
 {% extends 'Cliente/base.html'%}
 {% load static %}
 
-        {% block content %}
-
-          {% for categoria in categorias %}
+   {% block content %}
+      <div class="container">
+         <div class="rol">
+            {% for categoria in categorias %}
             <div class="container">
-            <h1>{{categoria.nombre}}</h1> <br/>
-            {% for producto in productos %}  
-              {{producto.id}}
-              {% if producto.categoria.nombre == categoria.nombre %} 
-                   <form method="post" action="/agregaritem">
-                   {% csrf_token %}
-                   <div class="card">
-                      <img src="{{producto.foto.url}}">
-                      <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
-                      <p>{{ producto.descripcion }}</p>
-                      <input id="alimento" type="hidden" name="alimento" value={{producto.id}}><br>
-                      <input id="cantidad" type="number" name="cantidad" min="1" max="4" value="0" style="text-align:center;">
-                      <button type="submit" class="btn btn-warning btn-block btn-flat">Añadir</button>
-                   </div>
-                  </form>
-               {% endif %}
-              
+               <h1>{{categoria.nombre}}</h1> <br/>
+               {% for producto in productos %}  
+                  {{producto.id}}
+                  {% if producto.categoria.nombre == categoria.nombre %} 
+                     <form method="post" action="/agregaritem">
+                        {% csrf_token %}
+                        <div class="col-3">
+                           <img style="width: 100%;" src="{{producto.foto.url}}">
+                           <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
+                           <p>Descripción: {{ producto.descripcion }}</p>
+                           <input id="alimento" type="hidden" name="alimento" value={{producto.id}}><br>
+                           <input id="cantidad" type="number" name="cantidad" min="1" max="10" value="1" style="text-align:center; width: 100%;">
+                           <button type="submit" class="btn btn-warning btn-block btn-flat">Añadir</button>
+                        </div>
+                     </form>
+                  {% endif %}
+               {% endfor %}
+            </div>
             {% endfor %}
-          </div>
-          {% endfor %}
-          <p>Usted visito esta pagina {{ num_visitas }} veces.</p>
-       {% endblock %}
+         </div>
+      </div>
+      <p>Usted visito esta pagina {{ num_visitas }} veces.</p>
+   {% endblock %}
