@@ -1,10 +1,10 @@
 from django.db import models
 from rotiseria.models.rol import Rol
+from django.contrib.auth.models import User
 
 class Usuario (models.Model):
-    alias = models.CharField(max_length=50, primary_key=True)
-    contrasenia = models.CharField(max_length=12)
-    rol= models.ForeignKey(Rol, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.alias
+        return self.user.username

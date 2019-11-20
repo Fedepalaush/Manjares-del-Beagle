@@ -3,7 +3,7 @@
         {% csrf_token %}
    <h3>¿Desea eliminar el producto {{ producto.nombre}}?</h3>
     <button class= "<btn btn-danger " type=" submit">Si, eliminar</button>
-    <a class= "btn btn-default" href="{% url 'mapa' %}">Cancelar</a>
+    <a class= "btn btn-default" href="{% url 'index_administrador' %}">Cancelar</a>
 </form>
 
 {% endblock %}

@@ -11,6 +11,8 @@
         {{item.nombre}}
         {{item.descripcion}}
         {{item.precioActual}}
+ 			<a class="btn btn-primary" href="{% url 'editar_producto' item.id %}">Editar</a>
+            <a class="btn btn-danger" href="{% url 'borrar_producto' item.id %}">Borrar</a>
         <br>
 
   {% endfor %}
