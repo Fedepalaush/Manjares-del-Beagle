@@ -4,10 +4,59 @@
 <head>
 	<title>Maps</title>
 	<meta charset="UTF-8"/>
-	<link rel="stylesheet" href="{%static 'css/estilo.css'%}">
+	<link rel="stylesheet" href="{%static 'css/estiloRepartidor.css'%}">
 </head>
 <body>
-	<div id="map"></div>
+	<div id="map" style="position: relative;"></div>
+
+	<div id="contenedor" class="contenedor">
+		<a href="#" class="boton-cerrar" onclick="ocultar()">&times;</a>
+		<h1>STREET VIEW</h1>
+		<hr>
+		<h2>Isla Año Nuevo 310</h2>
+		<hr>
+		<h3>Pedido ID</h3>
+		
+		<table>
+		  <tr>
+		  	<th scope="col">Unidades</th>
+		    <th scope="col">Producto</th>
+		    <th scope="col">Precio unitario</th>
+		    <th scope="col">Subtotal</th>
+		  </tr>
+
+		  <tr>
+		    <td>3</td>
+		    <td>Producto 1</td>
+		    <td>$120</td>
+		    <td>$360</td>
+		  </tr>
+
+		  <tr>
+		    <td>2</td>
+		    <td>Producto 2</td>
+		    <td>$120</td>
+		    <td>$240</td>
+		  </tr>
+
+		  <tr>
+		    <td>3</td>
+		    <td>Producto 3</td>
+		    <td>$120</td>
+		    <td>$360</td>
+		  </tr>
+
+		  <tr>
+		  	<td></td>
+		  	<td></td>
+		    <th scope="row" >TOTAL</th>
+		    <td><strong>$960</strong></td>
+		  </tr>
+		</table>
+
+		<hr>
+		<button type="button">Entregado</button>
+	</div>
 
 	<script>
 		var markersData = [
@@ -21,9 +70,10 @@
 		];
 	</script>
 
-	<script type='text/javascript' src=" {%static 'js/script.js'%}"></script>
+	<script type='text/javascript' src="{%static 'js/scriptRepartidor.js'%}"></script>
+	<script type='text/javascript' src="{%static 'js/scriptRepartidorPanel.js'%}"></script>
 	
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGk6-9dS-9z2A0IttP9epbnDCEni3iXsY&callback=initMap"
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5bJ7e24SdcnhOtbqPMfC30MrOlhLyMTI&callback=initMap"
   type="text/javascript"></script>
 </body>
 </html>

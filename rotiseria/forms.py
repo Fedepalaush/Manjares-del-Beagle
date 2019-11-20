@@ -76,7 +76,6 @@ class PedidoForm(forms.ModelForm):
 			'total',
 			'productos',
 			'bloque',
-			'cliente',
 			'estadoPedido',
 		]
 		labels = {
@@ -84,7 +83,6 @@ class PedidoForm(forms.ModelForm):
 			'total': 'Total',
 			'productos':'Productos',
 			'bloque': 'Bloque',
-			'cliente': 'Cliente',
 			'estadoPedido': 'EstadoPedido'}
 
 
@@ -144,3 +142,5 @@ class UserForm(UserCreationForm):
 		fields = ['username',
 				  'password1',
 				  'password2']
+	latitud = forms.CharField()
+	longitud = forms.CharField()

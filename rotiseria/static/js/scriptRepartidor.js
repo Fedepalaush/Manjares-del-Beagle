@@ -1,12 +1,11 @@
-
 //Iniciamos el mapa con los marcadores del JSON
 
 function initMap(){
-   
-    var map = new google.maps.Map(document.getElementById('map'),{
-      zoom: 13,
-      center: {lat:-54.8161769 ,lng: -68.3278668}
-    });
+  var ushuaia = {lat:-54.8161769 ,lng: -68.3278668};
+  var map = new google.maps.Map(document.getElementById('map'),{
+    zoom: 13,
+    center: ushuaia
+  });
 
   //agrego letras a los marcadores
   var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -20,9 +19,8 @@ function initMap(){
   });
   markerInicio.addListener('click', function(){
     var content = '<h3>' + 'Gral. Manuel Belgrano 43' + '</h3>' +
-      '<p> Manjares del Beagle </p>' +
-      '<button type="button">Detalles</button>';
-      informacion.setContent(content)
+      '<p> Manjares del Beagle </p>';
+      informacion.setContent(content);
       informacion.open(map, this);
     });
 
@@ -43,16 +41,17 @@ function initMap(){
     marker.addListener('click', function(){
       var content = '<h3>' + this.data.dir + '</h3>' +
         '<p>Pedido N°XXXXXX</p>' +
-        '<button type="button">Detalles</button>' +
+        '<button type="button" id="abrir" href="javascript:void(0)" onclick="mostrar()">Detalles</button>' +
         '<button type="button">Entregado</button>';
-        informacion.setContent(content)
+        informacion.setContent(content);
         informacion.open(map, this);
       });
     markers.push(marker)
   }
 
+  
 
-  //TRAZANDO EL CAMINO ENTRE EN MARCADOR 1 Y 2
+  //TRAZANDO EL CAMINO ENTRE EL MARCADOR INICIO -- (marcadores de por medio) -- FIN
   var objConfigDR = {
     map: map,
     suppressMarkers: true,
