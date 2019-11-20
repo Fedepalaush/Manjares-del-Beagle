@@ -10,6 +10,7 @@
  {% if categorías %}
       {% for item in categorías %}
         {{item.nombre}}
+          <a class="btn btn-danger" href="{% url 'borrar_categoria' item.nombre %}">Borrar</a>
         <br>
   {% endfor %}
 
