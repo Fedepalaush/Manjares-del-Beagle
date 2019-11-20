@@ -12,7 +12,7 @@
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Subtotal</th>
-                <th>Eliminar</th>
+                <th>Gestión</th>
             </tr>
         </thead>
         <tbody>
@@ -38,54 +38,61 @@
 <a href="{% url 'indexCliente' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Seguir comprando</a>
 <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" 
 style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</a>
+
 <h2 style="text-align: center;">Datos Personales</h2>
 <hr style="height: 3px; background-color: black;" width="90%"/>
 
+<br>
 <form action="/confirmarPedido" method="post">  
     {% csrf_token %}
-    <div class="form-group row">
-        <label for="example-text-input" class="col-1 col-form-label">Nombre</label>
-        <div class="col-4">
-            <input class="form-control" type="text" id="example-text-input">
-        </div>
-    </div>
+    <label for="nombreApellido">Ingresar nombre: </label>
+    <input id="nombreApellido" type="text" name="nombreApellido">
 
-    <div class="form-group row">
-        <label for="example-text-input" class="col-1 col-form-label">Celular</label>
-        <div class="col-4">
-            <input class="form-control" type="text" id="example-text-input">
-        </div>
-    </div>
+    <label for="celular">Celular: </label>
+    <input id="celular" type="text" name="celular">
+
+    <label for="descripcion">Descripcion: </label>
+    <input id="descripcion" type="text" name="descripcion">
+
+    <fieldset style="width: 400px; border:1px solid black">
+        <legend class="w-auto">Entrega</legend>
+        <input name="entrega" type="radio" value="enlocal" onclick="ocultarDireccion()" />En local. <br>
+        <input name="entrega" type="radio" onclick="mostrarDireccion()" />En domicilio.
+        <input id="direccion" type="text" name="direccion" size="50" placeholder="Ingrese su dirección..."
+        autocomplete="on" runat="server" style="display: none" />
+    </fieldset>
+
+    <input id="latitud" type="hidden" name="latitud" ><br>
+    <input id="longitud" type="hidden" name="longitud" ><br>
+
+    <button type="submit" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="position: absolute; right: 0;" onclick="obtenerDireccion()">Confirmar pedido</button>
 
 </form>
 
-    <form>
-        <fieldset style="width: 400px; border:1px solid black">
-            <legend class="w-auto">Entrega</legend>
-            <input name="entrega" type="radio" value="enlocal" onclick="ocultarDireccion()" />En local. <br>
-            <input name="entrega" type="radio" value="endomicilio" onclick="mostrarDireccion()" />En domicilio.
-            <input id="buscarTextField" type="text" size="50" placeholder="Ingrese su dirección..."
-            autocomplete="on" runat="server" style="display: none" />
-        </fieldset>
-        <fieldset style="width: 400px; border:1px solid black">
-            <legend class="w-auto">Pago</legend>
-            <input name="pago" type="radio" value="efectivo" />Efectivo. <br>
-            <input name="pago" type="radio" value="tarjeta" />Tarjeta.
-        </fieldset>
-    </form>
+    <script>
+        function obtenerDireccion() {
+            if (document.getElementById('direccion').value == "") {
+                document.getElementById('direccion').value = "-";
+                document.getElementById('latitud').value = "0";
+                document.getElementById('longitud').value = "0";
+            }
+            if (document.getElementById('descripcion').value == ""){
+                document.getElementById('descripcion').value = "-";
+            }
+        }
+    </script>
 
-    <!-- BOTON PAGAR MERCADO PAGO -->
+<!-- BOTON PAGAR MERCADO PAGO -->
 
-      <form action="/carrito" method="post">
-        <script
-         src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-         data-preference-id="${{preference_id}}">
-        </script>
-      </form>
+<form action="/carrito" method="post">
+    {% csrf_token %}
+    <script
+     src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+     data-preference-id="${{preference_id}}">
+    </script>
+  </form>
 
-    <!-- FIN MERCADO PAGO -->
-
-    <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="position: absolute; right: 0;">Confirmar pedido</a>
+<!-- FIN MERCADO PAGO -->
 
 <script>
     function mostrarDireccion() {
@@ -94,14 +101,7 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
     function ocultarDireccion() {
         document.getElementById("direccion").style.display= "none";
     }
-    function obtenerDireccion() {
-        if (document.getElementById('direccion').value == "") {
-            document.getElementById('direccion').value = "-";
-        }
-    }
 </script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5bJ7e24SdcnhOtbqPMfC30MrOlhLyMTI&libraries=places"></script>
-
 {% endblock %}
-

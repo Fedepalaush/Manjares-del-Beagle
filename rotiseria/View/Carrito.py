@@ -104,6 +104,7 @@ class VistaCarrito(View):
                 longitud = form.cleaned_data['longitud']
                 #Obtenemos solo la direccion con el numero, nada mas...
                 direccion = VistaCarrito.obtenerDireccion(dire)
+                descripcion = VistaCarrito.obtenerDescripcion(descripcion)
                 estaEnbd = False
                 if direccion == '': #Si la direccion es vacia es xq retira en la rotiseria
                     direccionCliente = Mapa.objects.get(direccion = 'General Manuel Belgrano 43')
@@ -145,3 +146,9 @@ class VistaCarrito(View):
                 d = d + dire[i]
                 i = i + 1
         return d
+
+    def obtenerDescripcion(desc):
+        if desc == '-':
+            desc = ""
+        return desc
+    
