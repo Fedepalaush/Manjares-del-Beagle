@@ -37,7 +37,7 @@ class SignIn(FormView):
                 return redirect('quienesSomos')
         return render(request, template_name=self.template_name, context={form:form})
 
-@user_passes_test(lambda u: u.is_superuser)
+#@user_passes_test(lambda u: u.is_superuser)
 def register(request):
     if request.method == "POST":
         u_form = UserForm(request.POST)
@@ -65,8 +65,8 @@ def login (request):
             users = User.objects.filter(username=username)
             user= users[0]
             usuarios=Usuario.objects.filter(user__id=user.id)
-            if users [0].user.is_superuser:
-                return redirect('registro')
+        #    if users [0].user.is_superuser:
+         #       return redirect('registro')
             if usuarios[0].rol.nombre == 'Recepcionista':
                 return redirect('listar_producto')
             elif usuarios[0].rol.nombre == ('Administrador'):

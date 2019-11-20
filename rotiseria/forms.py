@@ -142,5 +142,3 @@ class UserForm(UserCreationForm):
 		fields = ['username',
 				  'password1',
 				  'password2']
-	latitud = forms.CharField()
-	longitud = forms.CharField()
