@@ -1,7 +1,7 @@
 from django import forms
-from .models import Producto, Categoría, Cliente, Bloque, Pedido
-from django.contrib.auth.models import User
+from .models import Producto, Categoría, Cliente, Bloque, Pedido, Rol, Usuario
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ProductoForm(forms.ModelForm):
 
@@ -58,6 +58,7 @@ class ClienteForm(forms.ModelForm):
 		model = Cliente
 
 		fields = [
+
 			'nombre',
 			'telefono',
 
@@ -130,3 +131,16 @@ class DatosClienteForm(forms.Form):
 	direccion = forms.CharField()
 	latitud = forms.CharField()
 	longitud = forms.CharField()
+
+class UserForm(UserCreationForm):
+
+	rol = forms.ModelChoiceField(
+		queryset = Rol.objects.all(),
+		required = True,
+	)
+
+	class Meta:
+		model = User
+		fields = ['username',
+				  'password1',
+				  'password2']

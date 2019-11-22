@@ -43,6 +43,19 @@
 	text-decoration: none;
 }
 
+.contenedor img{
+	position: relative;
+	/* ANCHO */
+	width: 80%;
+	/* ALTO */
+	height: auto;
+}
+
+#imagen {
+	text-align: center;
+	border: black 20px;
+}
+
 #abrir {
 	
 }

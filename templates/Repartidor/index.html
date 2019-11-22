@@ -4,67 +4,35 @@
 <head>
 	<title>Maps</title>
 	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="{%static 'css/estiloRepartidor.css'%}">
 </head>
 <body>
 	<div id="map" style="position: relative;"></div>
 
 	<div id="contenedor" class="contenedor">
-		<a href="#" class="boton-cerrar" onclick="ocultar()">&times;</a>
-		<h1>STREET VIEW</h1>
-		<hr>
-		<h2>Isla Año Nuevo 310</h2>
-		<hr>
-		<h3>Pedido ID</h3>
-		
-		<table>
-		  <tr>
-		  	<th scope="col">Unidades</th>
-		    <th scope="col">Producto</th>
-		    <th scope="col">Precio unitario</th>
-		    <th scope="col">Subtotal</th>
-		  </tr>
+		<a href="#" id="cerrar" class="boton-cerrar" onclick="ocultar()">&times;</a>
+		<!-- Street View -->
+		<div id="imagen">
+			<img id="imagenMapa" onclick="street()">
+		</div>
+		<!-- Fin Street View -->
 
-		  <tr>
-		    <td>3</td>
-		    <td>Producto 1</td>
-		    <td>$120</td>
-		    <td>$360</td>
-		  </tr>
+		<div id="domicilio">
+			<!-- aqui ponremos los datos del domicilio que se toque en el marcador -->
+		</div>
 
-		  <tr>
-		    <td>2</td>
-		    <td>Producto 2</td>
-		    <td>$120</td>
-		    <td>$240</td>
-		  </tr>
-
-		  <tr>
-		    <td>3</td>
-		    <td>Producto 3</td>
-		    <td>$120</td>
-		    <td>$360</td>
-		  </tr>
-
-		  <tr>
-		  	<td></td>
-		  	<td></td>
-		    <th scope="row" >TOTAL</th>
-		    <td><strong>$960</strong></td>
-		  </tr>
-		</table>
-
-		<hr>
 		<button type="button">Entregado</button>
 	</div>
 
 	<script>
 		var markersData = [
-			{% for item in mapas %}
+			{% for pedido in pedidos %}
 				{
-					lat: {{item.latitud}},
-					long: {{item.longitud}},
-					dir: '{{item.direccion}}',
+					lat: {{pedido.mapa.latitud}},
+					long: {{pedido.mapa.longitud}},
+					dir: '{{pedido.mapa.direccion}}',
+					telefono: {{pedido.telefono_cliente}}
 				},
 			{% endfor %}
 		];

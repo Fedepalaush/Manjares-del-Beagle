@@ -1,18 +1,25 @@
 from django.urls import path
+<<<<<<< HEAD
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos
+=======
+from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, indexProductos
+from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
+>>>>>>> aeb9c9546c9e24c4025bad4d7cbc65ad7f98055a
 from rotiseria.View.Repartidor import ListarDatosMapa
-from rotiseria.View.Sesion import SignIn, RegistroUsuario
+from rotiseria.View.Sesion import SignIn, register, login
 from rotiseria.View.Carrito import VistaCarrito
 from django.contrib.auth.views import logout_then_login
 
 urlpatterns = [
-
+path('indexAdministrador',indexAdministrador, name = 'index_administrador'),
+path('indexProductos',indexProductos, name = 'index_productos'),
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
 path('listarProductos',ListarProducto.as_view(), name = 'listar_producto'),
 path('borrarProducto/<str:nombrep>/', BorrarProducto, name='borrar_producto'),
-path('editarProducto/<str:nombrep>/', EditarProducto, name='editar_producto'),
+path('editarProducto/<int:pk>/', EditarProducto.as_view(), name='editar_producto'),
 
 path('crearCategoría',CrearCategoria.as_view(), name = 'crear_categoria'),
 path('listarCategorías',ListarCategorias.as_view(), name = 'listar_categoria'),
@@ -41,9 +48,11 @@ path('rechazar_pedido/<int:id>/', rechazar_pedido, name = 'rechazar_pedido'),
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
-path('accounts/login/',SignIn.as_view(), name = 'login'),
+#iniciar sesion
+path('accounts/login/',login, name = 'login'),
+#cerrar sesion
 path('logout/',logout_then_login, name = 'logout'),
-path('registro',RegistroUsuario.as_view(), name = 'registro'),
+path('registro',register, name = 'registro'),
 
 #URLs para operar con el carrito de compras
 path('carrito', VistaCarrito.obtenerCarrito, name = "carrito"),
