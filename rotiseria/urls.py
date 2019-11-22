@@ -1,7 +1,7 @@
 from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
-from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
-from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
+from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos
 from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, RegistroUsuario
 from rotiseria.View.Carrito import VistaCarrito
@@ -30,10 +30,15 @@ path('borrarCliente/<int:dni>/', BorrarCliente, name='borrar_cliente'),
 path('', indexCliente, name='indexCliente'),
 path('indexUsuario', index, name = "indexUsuario"),
 path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
-path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
+
+# Urls del recepcionista
+path('recepcionista',ListarPedido.as_view(), name = 'listar_pedidos'),
+path('pedidosConfirmados', pedidosConfirmados, name = 'pedidos_confirmados'),
+path('pedidosRechazados', pedidosRechazados, name = 'pedidos_rechazados'),
+path('confirmar_pedido/<int:id>/', confirmar_pedido, name = 'confirmar_pedido'),
+path('rechazar_pedido/<int:id>/', rechazar_pedido, name = 'rechazar_pedido'),
 
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
-
 
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
 path('accounts/login/',SignIn.as_view(), name = 'login'),

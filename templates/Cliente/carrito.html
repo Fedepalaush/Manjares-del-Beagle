@@ -76,9 +76,13 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
     function ocultarDireccion() {
         document.getElementById("direccion").style.display= "none";
     }
-    function obtenerDireccion() {
+</script>
+<script>
+      function obtenerDireccion() {
         if (document.getElementById('direccion').value == "") {
             document.getElementById('direccion').value = "-";
+            document.getElementById('latitud').value = 0
+            document.getElementById('longitud').value = 0
         }
     }
 </script>

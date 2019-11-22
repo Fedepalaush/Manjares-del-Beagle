@@ -60,14 +60,4 @@ class CrearPedido(CreateView):
     template_name = 'Cliente/crearPedido.html'
     success_url = reverse_lazy('index')
 
-class ListarPedido(ListView):
-    model = Pedido
-    template_name = "Recepcionista/listarPedidos.html"
-    form_class = PedidoForm
 
-    def get(self, request, *args, **kwargs):
-        #Con esto le paso el total como unico valor sumado de todos los productos del pedido
-        pedidos = Pedido.objects.all()
-        pedidoProductos = PedidoProducto.objects.all()
-        context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
-        return render(request, self.template_name, context=context_dict)

@@ -169,20 +169,10 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <a href=">Añadir</a>
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Productos</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Categorias</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Pedidos</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{% url 'listar_pedidos' %}">Para confirmar</a></li>
-            <li><a href="#">Confirmados</a></li>
-          </ul>
-        </li>
+        
+        <li><a href="{% url 'listar_pedidos' %}"><i class="fa fa-link"></i> <span>Pedidos para confirmar</span></a></li>
+        <li><a href="{% url 'pedidos_confirmados' %}"><i class="fa fa-link"></i> <span>Pedidos en preparacion</span></a></li>
+        <li><a href="{% url 'pedidos_rechazados' %}"><i class="fa fa-link"></i> <span>Pedidos rechazados</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
