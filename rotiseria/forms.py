@@ -129,6 +129,8 @@ class DatosClienteForm(forms.Form):
 	celular = forms.IntegerField()
 	descripcion = forms.CharField()
 	direccion = forms.CharField()
+	latitud = forms.CharField()
+	longitud = forms.CharField()
 
 class UserForm(UserCreationForm):
 
@@ -142,5 +144,3 @@ class UserForm(UserCreationForm):
 		fields = ['username',
 				  'password1',
 				  'password2']
-	latitud = forms.CharField()
-	longitud = forms.CharField()

@@ -4,6 +4,7 @@ function mostrar() {
   document.getElementById('abrir').style.display = 'none';
   document.getElementById('cerrar').style.display = 'inline';
   document.getElementById('imagenMapa').src = 'http://maps.googleapis.com/maps/api/streetview?size=160x205&location='+ document.getElementById('latitud').value +','+ document.getElementById('longitud').value +'&sensor=false&key=AIzaSyC5bJ7e24SdcnhOtbqPMfC30MrOlhLyMTI';
+  document.getElementById('domicilio').innerHTML = pedidoActivo.dir;
 }
 
 function ocultar() {

@@ -33,6 +33,7 @@ class VistaCarrito(View):
             ]
         }
         preferenceResult = mp.create_preference(preference)
+        print (json.dumps(preferenceResult))
 
         #Si la 
         if 'alimentos' not in request.session:
@@ -59,11 +60,12 @@ class VistaCarrito(View):
                 'form'  : form,
                 'lista' : lista,
                 'total' : total,
-                'preference_id' : json.dumps(preferenceResult['response']['id']),
+                'preference_id' : preferenceResult['response']['id'],
             }) 
 
+    @csrf_protect
     def agregarItem(request):
-
+     
         if request.method == 'POST':
             form = PedidoAlimentoForm(request.POST)
             if form.is_valid():
@@ -78,7 +80,7 @@ class VistaCarrito(View):
                 else :
                         request.session['alimentos'][contenido['alimentoID']] = contenido['alimentoID'], contenido['cantidad']
 
-        return HttpResponseRedirect('/')
+        return HttpResponse("ok")
 
     def eliminarItem(request):
 

@@ -37,7 +37,9 @@ path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
 
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
+#iniciar sesion
 path('accounts/login/',login, name = 'login'),
+#cerrar sesion
 path('logout/',logout_then_login, name = 'logout'),
 path('registro',register, name = 'registro'),
 

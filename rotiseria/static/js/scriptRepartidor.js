@@ -1,5 +1,6 @@
 //Iniciamos el mapa con los marcadores del JSON
 var panorama;
+var pedidoActivo;
 
 function initMap(){
   var ushuaia = {lat:-54.8161769 ,lng: -68.3278668};
@@ -42,6 +43,7 @@ function initMap(){
       data: markersData[i]
     });
     marker.addListener('click', function(){
+      pedidoActivo = this.data;
       var content = '<h3>' + this.data.dir + '</h3>' +
         '<p>Pedido N°XXXXXX</p>' +
         '<button type="button" id="abrir" onclick="mostrar()">Detalles</button>' +
@@ -51,7 +53,7 @@ function initMap(){
         informacion.setContent(content);
         informacion.open(map, this);
       });
-    markers.push(marker)
+    markers.push(marker);
   }
 
   //streetView

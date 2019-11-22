@@ -1,31 +1,53 @@
 {% extends 'Cliente/base.html'%}
 {% load static %}
 
+   <!-- Menu principal del dia por defecto -->
+   <!-- Si selecciona una categoria, se actualiza el contenido -->
    {% block content %}
       <div class="container">
-         <div class="rol">
+         <div class="row">
             {% for categoria in categorias %}
-            <div class="container">
-               <h1>{{categoria.nombre}}</h1> <br/>
-               {% for producto in productos %}  
-                  {{producto.id}}
+               <!-- Titulo Categoria -->
+               <div class="col-sm-12">
+                  <h1 style="text-align: center">{{categoria.nombre}}</h1>
+                  <hr style="background-color: black; width: 40%">
+                  <br>
+               </div>
+               {% for producto in productos %}
                   {% if producto.categoria.nombre == categoria.nombre %} 
-                     <form method="post" action="/agregaritem">
+                     <form id="formCarrito{{producto.id}}" method="post" action="/agregaritem">
                         {% csrf_token %}
-                        <div class="col-3">
-                           <img style="width: 100%;" src="{{producto.foto.url}}">
-                           <h4>{{producto.nombre}}  ${{producto.precioActual}}</h4>
-                           <p>Descripción: {{ producto.descripcion }}</p>
-                           <input id="alimento" type="hidden" name="alimento" value={{producto.id}}><br>
-                           <input id="cantidad" type="number" name="cantidad" min="1" max="10" value="1" style="text-align:center; width: 100%;">
-                           <button type="submit" class="btn btn-warning btn-block btn-flat">Añadir</button>
+                        <div class="col-sm-4">
+                           <div class="card" style="width:200px; height:auto">
+                              <img class="card-img-top" src="{{producto.foto.url}}" alt="Card image"style="width: auto; height: 200px">
+                              <div class="card-body">
+                                 <h4>{{producto.nombre}} ${{producto.precioActual}}</h4> <hr>
+                                 <p>Descripción: {{producto.descripcion}}</p>
+                                 <input id="alimento" type="hidden" name="alimento" value={{producto.id}}>
+                                 <input id="cantidad" type="number" name="cantidad" min="1" max="50" value="1" style="text-align:center; width: 50%; float: left">
+                                 <button onclick="return formClicked({{producto.id}})" style="float: right" class="btn btn-success">Añadir</button>
+                              </div>
+                           </div>
                         </div>
                      </form>
                   {% endif %}
                {% endfor %}
-            </div>
             {% endfor %}
          </div>
-      </div>
-      <p>Usted visito esta pagina {{ num_visitas }} veces.</p>
+      </div> <br>
+      <!-- <p>Usted visito esta pagina {{ num_visitas }} veces.</p> -->
+
+   <script>
+      function formClicked(producto_id) {
+        fetch("/agregaritem", {
+         method: "POST",
+         body: new FormData(document.getElementById('formCarrito'+producto_id))
+         });
+         alert("se agrego tu producto al carrito");
+         return false;
+      }
+
+
+   </script>
    {% endblock %}
+

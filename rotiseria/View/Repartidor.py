@@ -16,16 +16,10 @@ class ListarDatosMapa (ListView):
     template_name = "Repartidor/index.html"
 
     def get(self, request, *args, **kwargs):
-        mapas = Mapa.objects.all()
-        context_dict = {'mapas': mapas}
+        #mapas = Mapa.objects.all()
+        pedidos = Pedido.objects.all()
+        context_dict = {'pedidos': pedidos}
         return render(request, self.template_name, context=context_dict)
 
-    def obtenerDatosPedido():
-        mapas = Mapa.objects.all()
-        print(mapas)
-        pedido = Pedido.objects.all()
-
-        context_dict = {'mapas': mapas, 'pedido': pedido}
-        return render(request, self.template_name, context=context_dict)
-
+    
     
