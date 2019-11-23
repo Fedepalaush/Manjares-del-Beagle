@@ -1,8 +1,14 @@
+{% load crispy_forms_tags %}
 <div class="row"></div>
 <div class="col-md-5" >
 <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+        <div id="div_id_nombre" class="form-group">
+    <label for="id_nombre" class=" requiredField">
+        Nombre de la categoría<span class="asteriskField"></span> </label>
+    <div class="">
+        <input type="text" name="nombre" maxlength="50" class="textinput textInput form-control" required id="id_nombre"> </div>
+</div>
     <button type=" submit">Guardar</button>
 </form>
 </div>

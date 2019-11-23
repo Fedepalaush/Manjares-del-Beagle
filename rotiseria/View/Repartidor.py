@@ -20,9 +20,8 @@ class ListarDatosMapa (ListView):
         context_dict = {'mapas': mapas}
         return render(request, self.template_name, context=context_dict)
 
-    def obtenerDatosPedido():
+    def obtenerDatosPedido(self,request):
         mapas = Mapa.objects.all()
-        print(mapas)
         pedido = Pedido.objects.all()
 
         context_dict = {'mapas': mapas, 'pedido': pedido}
