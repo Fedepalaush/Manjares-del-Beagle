@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
-from rotiseria.models import Mapa, Pedido
+from rotiseria.models import Pedido, Mapa
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -17,7 +17,7 @@ class ListarDatosMapa (ListView):
 
     def get(self, request, *args, **kwargs):
         #mapas = Mapa.objects.all()
-        pedidos = Pedido.objects.all()
+        pedidos = Pedido.objects.filter(bloque = 1)
         context_dict = {'pedidos': pedidos}
         return render(request, self.template_name, context=context_dict)
 
