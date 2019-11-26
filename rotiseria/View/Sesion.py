@@ -4,12 +4,11 @@ from django.contrib.auth import login as loggin
 from django.views.generic import FormView, CreateView
 from rotiseria.forms import RegistroForm, UserForm
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from rotiseria.models import Rol, Usuario
 from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import Group
 
 
 
@@ -42,18 +41,33 @@ class SignIn(FormView):
 
 @user_passes_test(lambda u: u.is_superuser)
 def register(request):
+    roles= Rol.objects.all()
     if request.method == "POST":
         u_form = UserForm(request.POST)
         if u_form.is_valid():
             user = u_form.save()
+
+
             rol_obtenido = str(u_form.cleaned_data['rol'])
             objeto_rol = Rol.objects.get(nombre=rol_obtenido)
             mi_usuario = Usuario.objects.create(user=user, rol = objeto_rol)
             mi_usuario.save()
+            if rol_obtenido == 'Repartidor':
+                permission = Permission.objects.get(name='Es_Repart')
+                mi_usuario.user.user_permissions.add(permission)
+            if rol_obtenido == 'Administrador':
+                permission = Permission.objects.get(name='Es_Admin')
+                mi_usuario.user.user_permissions.add(permission)
+            if rol_obtenido == 'Recepcionista':
+                permission = Permission.objects.get(name='Es_Recep')
+                mi_usuario.user.user_permissions.add(permission)
+
+
             return redirect('login')
     else:
         u_form = UserForm(request.POST)
-    return render(request, 'Sesion/registro.html', {'u_form': u_form})
+    return render(request, 'Sesion/registro.html', {'u_form': u_form, 'roles':roles})
+
 
 
 def login(request):
@@ -77,15 +91,27 @@ def login(request):
             if (supus.username== username):
                 return redirect('registro')
             usuarios=Usuario.objects.filter(user__id=user.id)
+
+            #if users [0].user.is_superuser:
+             #   return redirect('registro')
+
+        #    if users [0].user.is_superuser:
+         #       return redirect('registro')
+
             if usuarios[0].rol.nombre == 'Recepcionista':
                 return redirect('listar_producto')
             if usuarios[0].rol.nombre == ('Administrador'):
                 return redirect('index_administrador')
+
             if usuarios[0].rol.nombre == 'Repartidor':
                 return redirect('listar_datos_mapa')
 
+            elif usuarios[0].rol.nombre == ('Repartidor'):
+                return redirect('listar_datos_mapa')
 
 
+            else:
+                return redirect('index')
     else:
         form = AuthenticationForm()
     return render (request, "Sesion/login.html", {'form':form})

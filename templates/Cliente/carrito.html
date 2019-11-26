@@ -84,11 +84,11 @@ style="position: absolute; right: 0;" onclick="vaciarCarrito()">Vaciar carrito</
 
 <!-- BOTON PAGAR MERCADO PAGO -->
 
-<form action="/carrito" method="post">
+<form action="/carrito" method="POST">
     {% csrf_token %}
     <script
      src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-     data-preference-id="${{preference_id}}">
+     data-preference-id="{{preference_id}}">
     </script>
   </form>
 

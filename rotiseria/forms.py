@@ -22,8 +22,10 @@ class ProductoForm(forms.ModelForm):
             'foto': 'Foto',
             'precioActual': 'Precio Actual',
 			'categoria':'Categoria',
-		    'Ganancia': 'Ganancia',
+		    'ganancia': 'Ganancia',
 		}
+
+
 
 class CategoriaForm (forms.ModelForm):
 	class Meta:
@@ -129,6 +131,8 @@ class DatosClienteForm(forms.Form):
 	celular = forms.IntegerField()
 	descripcion = forms.CharField()
 	direccion = forms.CharField()
+	latitud = forms.CharField()
+	longitud = forms.CharField()
 
 class UserForm(UserCreationForm):
 

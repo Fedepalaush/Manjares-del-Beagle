@@ -1,15 +1,12 @@
-{% block title %}
-Login
-{% endblock %}
-
-{% block navbar%}
-{% endblock %}
+{% extends 'Layouts/indexUsuario.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
-  <h1/> LOGIN </h1>
+  <h1/> LOGIN rfreferf</h1>
   <form class=" site-form" action="{% url 'login'%}" method="post">
       {% csrf_token %}
-      {{form}}
+      {{form|crispy}}
       <input type="Submit" value="Login">
   </form>
 {% endblock %}
