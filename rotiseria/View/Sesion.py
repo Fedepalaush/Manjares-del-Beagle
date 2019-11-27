@@ -91,6 +91,7 @@ def login(request):
             if (supus.username== username):
                 return redirect('registro')
             usuarios=Usuario.objects.filter(user__id=user.id)
+<<<<<<< HEAD
 
             #if users [0].user.is_superuser:
              #   return redirect('registro')
@@ -98,6 +99,10 @@ def login(request):
         #    if users [0].user.is_superuser:
          #       return redirect('registro')
 
+=======
+        #    if users [0].user.is_superuser:
+         #       return redirect('registro')
+>>>>>>> c186011b03e9473ce49e2e6847def7a422647c57
             if usuarios[0].rol.nombre == 'Recepcionista':
                 return redirect('listar_producto')
             if usuarios[0].rol.nombre == ('Administrador'):
