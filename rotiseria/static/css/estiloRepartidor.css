@@ -8,6 +8,7 @@
 
 /* class */
 .contenedor {
+	/* fixed: posicionamiento absoluto y fijo */
 	position: fixed;
 	height: 0;
 	width: 100%;
@@ -15,11 +16,12 @@
 	right: 0;
 	bottom: 0;
 	z-index: 1;
-	background-color: #b0e4d2;
+	background-color: #bbe1b1;
 	overflow-x: hidden;
 	transition: 0.4s;
 	padding: 0;
 	box-sizing:border-box;
+	text-align: center;
 }
 
 .contenedor .boton-cerrar {
@@ -33,13 +35,13 @@
 	margin: 0;
 	height: 32px;
 	width: 32px;
-	text-align: center;
+	text-align: top;
 }
-
+/* boton cerrar */
 .contenedor a{
 	font-size: 120%;
-	color:#fff;
-	background-color:#b0e4d2;
+	color: black;
+	background-color: transparent;
 	text-decoration: none;
 }
 
@@ -48,7 +50,14 @@
 	/* ANCHO */
 	width: 80%;
 	/* ALTO */
-	height: auto;
+	height: 90%;
+	top: 10%;
+	border:3px solid green;
+}
+
+.contenedor h6{
+	text-align: left;
+	margin-left: 5%;
 }
 
 #imagen {

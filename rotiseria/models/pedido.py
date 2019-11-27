@@ -17,7 +17,7 @@ class Pedido (models.Model):
     descripcion = models.CharField(max_length=200, blank = True)
     telefono_cliente = models.CharField(max_length=20)
     mapa = models.ForeignKey(Mapa, on_delete=models.CASCADE)
-    pago = models.CharField(max_length=100)  #Pago online,    Paga en puerta
+    pago = models.CharField(max_length=100)  #Pago: online | domicilio | local
 
     def __str__(self):
         return str(self.id)

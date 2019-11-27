@@ -22,8 +22,10 @@ class ProductoForm(forms.ModelForm):
             'foto': 'Foto',
             'precioActual': 'Precio Actual',
 			'categoria':'Categoria',
-		    'Ganancia': 'Ganancia',
+		    'ganancia': 'Ganancia',
 		}
+
+
 
 class CategoriaForm (forms.ModelForm):
 	class Meta:

@@ -1,0 +1,58 @@
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<form method="post">{% csrf_token %}
+
+<div class="row">
+<div class="col-md-6" >
+
+    <div id="div_id_nombre" class="form-group">
+    <label for="id_nombre" class=" requiredField">
+        Nombre<span class="asteriskField">*</span> </label>
+    <div class="">
+        <input type="text" name="nombre" value={{producto.nombre}} maxlength="50" class="textinput textInput form-control" required id="id_nombre"> </div>
+</div>
+<div id="div_id_descripcion" class="form-group">
+    <label for="id_descripcion" class="">
+        Descripcion
+    </label>
+    <div class="">
+        <input type="text" name="descripcion" value="Con papas" maxlength="50" class="textinput textInput form-control" id="id_descripcion"> </div>
+</div>
+<div id="div_id_foto" class="form-group">
+    <label for="id_foto" class=" requiredField">
+        Foto<span class="asteriskField">*</span> </label>
+    <div class="">
+        Actualmente: <br>
+        <a href="/media/rotiseria/images/platja-nord-756x336_TYHTBKm.jpg">rotiseria/images/platja-nord-756x336_TYHTBKm.jpg</a>
+        <br> Modificar:
+        <input type="file" name="foto" accept="image/*" class="clearablefileinput form-control" id="id_foto"> </div>
+</div>
+<div id="div_id_precioActual" class="form-group">
+    <label for="id_precioActual" class=" requiredField">
+        Precio Actual<span class="asteriskField">*</span> </label>
+    <div class="">
+        <input type="text" name="precioActual" value={{producto.precioActual}}  class="numberinput form-control" required id="id_precioActual"> </div>
+</div>
+<div id="div_id_categoria" class="form-group">
+    <label for="id_categoria" class=" requiredField">
+        Categoria<span class="asteriskField">*</span> </label>
+    <div class="">
+        <select name="categoria" class="select form-control" required id="id_categoria">
+            <option value="">---------</option>
+            <option value="Plato Principal">Plato Principal</option>
+            <option value="Postre" selected>Postre</option>
+
+        </select>
+    </div>
+</div>
+<div id="div_id_ganancia" class="form-group">
+    <label for="id_ganancia" class=" requiredField">
+        Ganancia<span class="asteriskField">*</span> </label>
+    <div class="">
+        <input type="number" name="ganancia" value="20" class="numberinput form-control" required id="id_ganancia"> </div>
+</div>
+
+
+    <input type="submit" value="Modificar">
+</div>}
+</form>

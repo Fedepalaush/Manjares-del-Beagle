@@ -21,8 +21,8 @@ function initMap(){
     map: map
   });
   markerInicio.addListener('click', function(){
-    var content = '<h3>' + 'Gral. Manuel Belgrano 43' + '</h3>' +
-      '<p> Manjares del Beagle </p>';
+    var content = '<h4>' + 'Gral. Manuel Belgrano 43' + '</h4>' +
+      '<h6> Manjares del Beagle </h6>';
       informacion.setContent(content);
       informacion.open(map, this);
     });
@@ -44,12 +44,12 @@ function initMap(){
     });
     marker.addListener('click', function(){
       pedidoActivo = this.data;
-      var content = '<h3>' + this.data.dir + '</h3>' +
-        '<p>Pedido N°XXXXXX</p>' +
-        '<button type="button" id="abrir" onclick="mostrar()">Detalles</button>' +
+      var content = '<h4>' + this.data.dir + '</h4>' +
+        '<h6>Pedido N° ' + this.data.id + '</h6>' +
+        '<button type="button" class="btn btn-success" id="abrir" onclick="mostrar()">Detalles</button>' +
         '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
         '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
-        '<button type="button">Entregado</button>';
+        '<button type="button" class="btn btn-success">Entregado</button>';
         informacion.setContent(content);
         informacion.open(map, this);
       });

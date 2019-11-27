@@ -1,7 +1,13 @@
 from django.urls import path
+<<<<<<< HEAD
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, indexProductos
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos
+=======
+from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador,  editarproducto
+from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
+>>>>>>> ab2d911e7e35b14c884f99909a88e55e0600df00
 from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, register, login
 from rotiseria.View.Carrito import VistaCarrito
@@ -9,11 +15,12 @@ from django.contrib.auth.views import logout_then_login
 
 urlpatterns = [
 path('indexAdministrador',indexAdministrador, name = 'index_administrador'),
-path('indexProductos',indexProductos, name = 'index_productos'),
+
+path( 'editarProducto/<int:id_producto>', editarproducto, name = 'editar_producto'),
 path('crear_Producto',CrearProducto.as_view(), name = 'crear_producto'),
 path('listarProductos',ListarProducto.as_view(), name = 'listar_producto'),
 path('borrarProducto/<str:nombrep>/', BorrarProducto, name='borrar_producto'),
-path('editarProducto/<int:pk>/', EditarProducto.as_view(), name='editar_producto'),
+
 
 path('crearCategoría',CrearCategoria.as_view(), name = 'crear_categoria'),
 path('listarCategorías',ListarCategorias.as_view(), name = 'listar_categoria'),

@@ -1,9 +1,11 @@
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 {% block navbar %}
 {% endblock %}
 {% block content %}
 <form method = "post">
         {% csrf_token %}
-    {{ u_form.as_p }}
+{{u_form.as_p}}
     <button class="btn btn-primary "type="submit">Registrar</button>
 </form>
 {% endblock %}
