@@ -1,7 +1,7 @@
 from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, indexProductos
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
-from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
+from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos, contacto
 from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, register, login
 from rotiseria.View.Carrito import VistaCarrito
@@ -34,6 +34,7 @@ path('crearPedido',CrearPedido.as_view(), name = 'crear_pedido'),
 path('listarPedidos',ListarPedido.as_view(), name = 'listar_pedidos'),
 
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
+path('contacto',contacto, name = 'contacto'),
 
 
 path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),

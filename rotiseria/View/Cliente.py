@@ -6,12 +6,19 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+def contacto(request):
+    request.session.flush()
+    categorias = Categoría.objects.all()
+    contexto = {'categorias': categorias}
+    return render(request, 'Cliente/contacto.html', contexto)
+
 def quienesSomos(request):
     request.session.flush()
-    return render(request, 'Cliente/quienesSomos.html')
+    categorias = Categoría.objects.all()
+    contexto = {'categorias': categorias}
+    return render(request, 'Cliente/quienesSomos.html', contexto)
 
 def indexCliente(request):
-    
     if 'alimentos'not in request.session:
             request.session['alimentos'] = {}
             request.session['items'] = 0

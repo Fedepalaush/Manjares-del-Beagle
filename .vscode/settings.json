@@ -31,5 +31,24 @@
     
         // Enable parameter hints
         "editor.parameterHints.enabled": true,
+        "terminal.integrated.rendererType": "dom",
+        "window.zoomLevel": 0,
+        "breadcrumbs.enabled": true,
+        "emmet.triggerExpansionOnTab": true,
+        "emmet.showAbbreviationSuggestions": false,
+        "emmet.includeLanguages": {
+            "javascript": "javascriptreact",
+            "vue-html": "html",
+            "razor": "html",
+            "plaintext": "jade"
+        }
 
+    }
+    {
+        "emmet.preferences": {
+            "css.webkitProperties": "border-right,animation",
+            "css.mozProperties": "",
+            "css.oProperties": null,
+            "css.msProperties": null
+        }
     }

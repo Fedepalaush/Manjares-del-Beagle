@@ -1,55 +1,32 @@
+{% extends 'Layouts/baseUsuarios.html'%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<body>
-<h1>Index administrador</h1>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="">Link</a>
-      </li>
-       <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Productos
-      </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="{% url 'crear_producto' %}">Cargar</a>
-        <a class="dropdown-item" href="{% url 'listar_producto' %}">Listar</a>
+{% block content %}
+  <!-- Botones para Categoria y Producto --> 
+  <!-- style="width:200px; height:auto"   -->
+  <div class="row">
+    <div class="col-sm-6" align="center">
+      <div class="card" style="width: 16rem;">
+        <img src="/media/pensando.png" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title" align="center">Categorias</h5>
+          <hr style="background-color: gray;">
+          <a href="{% url 'listar_categoria' %}" class="btn btn-success">Listar</a>
+          <a href="{% url 'crear_categoria' %}" class="btn btn-success">Cargar</a>
+        </div>
       </div>
-    </li>
-
-           <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-        Categorías
-      </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="{% url 'crear_categoria' %}">Cargar</a>
-        <a class="dropdown-item" href="{% url 'listar_categoria' %}">Listar</a>
+    </div>
+    <div class="col-sm-6" align="center">
+      <div class="card" style="width: 16rem;">
+        <img src="/media/pensando.png" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title" align="center">Productos</h5>
+          <hr style="background-color: gray;">
+          <a href="{% url 'crear_producto' %}" class="btn btn-success">Listar</a>
+          <a href="{% url 'crear_producto' %}" class="btn btn-success">Cargar</a>
+        </div>
       </div>
-    </li>
-
-    </ul>
-
+    </div>
   </div>
-</nav>
-
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-</body>
-</html>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}

@@ -9,8 +9,6 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 
-
-
 class SignIn(FormView):
     template_name = 'Sesion/login.html'
     form_class = UserForm
@@ -40,21 +38,19 @@ class SignIn(FormView):
 
 #@user_passes_test(lambda u: u.is_superuser)
 def register(request):
+    roles = Rol.objects.all()
     if request.method == "POST":
         u_form = UserForm(request.POST)
-        print (u_form.is_valid())
         if u_form.is_valid():
             user = u_form.save()
             rol_obtenido = str(u_form.cleaned_data['rol'])
-            print("ROL OBTENIDO: " + rol_obtenido)
             objeto_rol = Rol.objects.get(nombre=rol_obtenido)
             mi_usuario = Usuario.objects.create(user=user, rol = objeto_rol)
             mi_usuario.save()
             return redirect('login')
     else:
         u_form = UserForm(request.POST)
-    return render(request, 'Sesion/registro.html', {'u_form': u_form})
-
+    return render(request, 'Sesion/registro.html', {'u_form': u_form, 'roles': roles})
 
 def login (request):
     totalUsuarios= Usuario.objects.all()
@@ -82,4 +78,4 @@ def login (request):
 
     else:
         form = AuthenticationForm()
-    return render (request, "Sesion/login.html", {'form':form})
+    return render (request, "Sesion/login.html",{'form':form})
