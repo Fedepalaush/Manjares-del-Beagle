@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'crispy_forms',
     'rotiseria.apps.RotiseriaConfig',
 ]
 
@@ -136,6 +137,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = reverse_lazy ('mapa')
 LOGOUT_REDIRECT_URL = reverse_lazy ('login')
 
-CRISPY_TEMPLATE_PACK = 'boostrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 CART_SESSION_ID = 'carro'
