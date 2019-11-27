@@ -1,13 +1,7 @@
 from django.urls import path
-<<<<<<< HEAD
-from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index
+from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, indexProductos
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos
-=======
-from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,EditarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, indexProductos
-from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque
-from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, ListarPedido, indexCliente, quienesSomos
->>>>>>> aeb9c9546c9e24c4025bad4d7cbc65ad7f98055a
 from rotiseria.View.Repartidor import ListarDatosMapa
 from rotiseria.View.Sesion import SignIn, register, login
 from rotiseria.View.Carrito import VistaCarrito

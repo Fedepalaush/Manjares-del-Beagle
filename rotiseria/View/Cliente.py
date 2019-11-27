@@ -58,12 +58,3 @@ class CrearPedido(CreateView):
     success_url = reverse_lazy('index')
 
 
-<<<<<<< HEAD
-=======
-    def get(self, request, *args, **kwargs):
-        #Con esto le paso el total como unico valor sumado de todos los productos del pedido
-        pedidos = Pedido.objects.all()
-        pedidoProductos = PedidoProducto.objects.all()
-        context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
-        return render(request, self.template_name, context=context_dict)
->>>>>>> aeb9c9546c9e24c4025bad4d7cbc65ad7f98055a
