@@ -17,31 +17,27 @@ def index(request):
 def indexAdministrador(request):
     return render(request, 'Administrador/indexAdministrador.html')
 
-
-@method_decorator(login_required, name='dispatch')
-class CrearProducto (PermissionRequiredMixin,CreateView):
-        login_required(login_url='registro')
-        permission_required = 'rotiseria.es_admin'
+class CrearProducto (CreateView):
         model = Producto
         form_class= ProductoForm
         template_name = 'Administrador/crearproducto.html'
         success_url = reverse_lazy('index_administrador')
 
         def get(self, request):
+             if not(request.user.has_perm('rotiseria.es_admin')):
+                return redirect(reverse_lazy('login'))
              categorias = Categoría.objects.all()
              return render(request, 'Administrador/crearproducto.html', {"categorias": categorias})
 
-@method_decorator(login_required, name='dispatch')
-class ListarProducto (PermissionRequiredMixin,ListView):
-    login_required(login_url='registro')
+class ListarProducto (ListView):
     model = Producto
-    permission_required =('rotiseria.es_admin')
     template_name = "Administrador/listarproducto.html"
     form_class = ProductoForm
 
 
     def get(self, request, *args, **kwargs):
-
+        if not(request.user.has_perm('rotiseria.es_admin')):
+                return redirect(reverse_lazy('login'))
         productos = Producto.objects.all()
         context_dict = {'productos': productos}
         return render(request, self.template_name, context=context_dict)
@@ -59,8 +55,9 @@ def BorrarProducto(request, nombrep):
 
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_admin')
-def editarproducto (request, id_producto):
-    producto= Producto.objects.get (id= id_producto)
+def editarProducto(request, id_producto):
+    producto = Producto.objects.get (id= id_producto)
+    categorias = Categoría.objects.all()
     if request.method == 'GET':
         form= ProductoForm(instance=producto)
     else:
@@ -68,27 +65,29 @@ def editarproducto (request, id_producto):
         if form.is_valid():
             form.save()
         return redirect('index_administrador')
-    return render (request, 'Administrador/editarproducto.html', {'form':form, 'producto':producto})
+    return render (request, 'Administrador/editarProducto.html', {'form':form, 'producto':producto,'categorias':categorias})
 
-@method_decorator(login_required, name='dispatch')
-class CrearCategoria(PermissionRequiredMixin,CreateView):
-        login_required(login_url='registro')
-        permission_required = ('rotiseria.es_admin')
+class CrearCategoria(CreateView):
         model = Categoría
         form_class = CategoriaForm
         template_name = 'Administrador/crearcategoria.html'
         success_url = reverse_lazy('index_administrador')
 
+        def get(self, request):
+             if not(request.user.has_perm('rotiseria.es_admin')):
+                return redirect(reverse_lazy('login'))
+             categorias = Categoría.objects.all()
+             return render(request, self.template_name, {"categorias": categorias})
 
-@method_decorator(login_required, name='dispatch')
-class ListarCategorias (PermissionRequiredMixin,ListView):
-    login_required(login_url='registro')
-    permission_required = ('rotiseria.es_admin')
+
+class ListarCategorias (ListView):
     model = Categoría
     template_name = "Administrador/listarcategorías.html"
     form_class = CategoriaForm
 
     def get(self, request, *args, **kwargs):
+        if not(request.user.has_perm('rotiseria.es_admin')):
+                return redirect(reverse_lazy('login'))
         categorías = Categoría.objects.all()
         context_dict = {'categorías': categorías}
         return render(request, self.template_name, context=context_dict)
@@ -101,3 +100,16 @@ def BorrarCategoría(request, nombrec):
          categoría.delete()
          return redirect('index_administrador')
         return render(request, 'Administrador/borrarcategoría.html', {'categoría':categoría})
+
+@login_required(redirect_field_name='login')
+@permission_required('rotiseria.es_admin')
+def editarcategoria (request, nombre):
+    categoria = Categoría.objects.get(nombre = nombre)
+    if request.method == 'GET':
+        form= CategoriaForm(instance=categoria)
+    else:
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+        return redirect('index_administrador')
+    return render (request, 'Administrador/editarcategoria.html', {'form':form, 'categoria':categoria})        

@@ -17,30 +17,10 @@ mp = mercadopago.MP("2976477610493912", "36kgwdIqyhQeJylWXK8ftz692RzBWIYg")
 class VistaCarrito(View):
 
     def obtenerCarrito(request):
-        p = Pedido.objects.all()
-        longitud = len(p)
-
-        ultimo_pedido = p[longitud-1]
-
-        preference = {
-            "items": [
-                {
-                    "title": "Manjares del Beagle",
-                    "quantity": 1,
-                    "currency_id": "ARS",
-                    "unit_price": float(ultimo_pedido.total)
-                }
-            ]
-        }
-        preferenceResult = mp.create_preference(preference)
-        print (json.dumps(preferenceResult))
-
-        #Si la 
+ 
         if 'alimentos' not in request.session:
-            HttpResponseRedirect('/')
-
+            HttpResponseRedirect('')
         else:
-
             form = ProductoIDForm()
             alimentos = request.session['alimentos']
             lista = []
@@ -55,6 +35,18 @@ class VistaCarrito(View):
                             'cantidad': datos[1],
                             'subtotal': subtotal})
                 total += subtotal
+
+            preference = {
+                "items": [
+                    {
+                        "title": "Manjares del Beagle",
+                        "quantity": 1,
+                        "currency_id": "ARS",
+                        "unit_price": float(total)
+                    }
+                ]
+            }
+            preferenceResult = mp.create_preference(preference)
 
             return render(request, "Cliente/carrito.html", {
                 'form'  : form,
@@ -104,6 +96,7 @@ class VistaCarrito(View):
                 dire = form.cleaned_data['direccion']
                 latitud = form.cleaned_data['latitud']
                 longitud = form.cleaned_data['longitud']
+                pago = form.cleaned_data['pago']
                 #Obtenemos solo la direccion con el numero, nada mas...
                 direccion = VistaCarrito.obtenerDireccion(dire)
                 descripcion = VistaCarrito.obtenerDescripcion(descripcion)
@@ -134,6 +127,7 @@ class VistaCarrito(View):
                 pedidoProducto = PedidoProducto.objects.create(producto=producto, pedido=pedido,
                                                                precioVariable= precioActual, subtotal=subtotal,
                                                                cantidad=datos[1])
+            pedido.pago = pago
             pedido.total = total
             pedido.save()
             request.session.flush()

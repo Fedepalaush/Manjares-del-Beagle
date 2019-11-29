@@ -1,10 +1,10 @@
 from django.db import models
-from rotiseria.models.usuario import Usuario
+from datetime import datetime
 
 class Bloque(models.Model):
     id = models.AutoField(primary_key=True)
-    fecha = models.DateField()
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(default = datetime.now)
+   
 
     def __str__(self):
         return str(self.id)     

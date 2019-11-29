@@ -1,20 +1,24 @@
+{% extends 'Layouts/baseUsuarios.html'%}
 {% load crispy_forms_tags %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<div class="row"></div>
-         <div class="col-md-7" >
-            <form method = "post" enctype="multipart/form-data">
-             {% csrf_token %}
-                <br>
-              <div id="div_id_nombre" class="form-group">
-                <label for="id_nombre" class=" requiredField">
-                    Nombre de la categoría<span class="asteriskField"></span> </label>
-                <div class="">
-                    <input type="text" name="nombre" maxlength="50" class="textinput textInput form-control" required id="id_nombre">
-                </div>
-              </div>
-             <button type=" submit">Guardar</button>
-            </form>
-        </div>
-
+{% load static %}
+{% block title %}
+  <title>Crear categoría</title>
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-6">
+      <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}<br>
+          <div id="div_id_nombre" class="form-group">
+            <label for="id_nombre" class=" requiredField">Nombre de la categoría</label>
+            <div class="">
+              <input type="text" name="nombre" maxlength="50" class="textinput textInput form-control" required id="id_nombre">
+            </div>
+          </div>
+          <button class="btn btn-success" type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
 
 

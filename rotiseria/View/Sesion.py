@@ -80,7 +80,7 @@ def login(request):
                 return redirect('registro')
             usuarios=Usuario.objects.filter(user__id=user.id)
             if usuarios[0].rol.nombre == 'Recepcionista':
-                return redirect('listar_pedidos')
+                return redirect('recepcionista')
             if usuarios[0].rol.nombre == ('Administrador'):
                 return redirect('index_administrador')
             if usuarios[0].rol.nombre == 'Repartidor':

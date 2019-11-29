@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
     <meta  http-equiv = "refresh"  content = "30">
-    <h1>Pedidos pendientes</h1>
+    <h1>Pedidos preparandose</h1>
+    <button><a href="/nuevo_bloque">Nuevo bloque</a></button>
+    <h3>ID: {{ultimo_bloque.id}}</h3>
     {% if pedidos %} 
         {% for pedido in pedidos %}
-            {% if pedido.estadoPedido.estado == 'pendiente' %}
+            {% if pedido.estadoPedido.estado == 'confirmado' %}
                 <h3>ID Pedido: {{ pedido.id }}</h3>
                 <h4>Cliente: {{pedido.nombre_cliente}}</h4>
                 <table class="table">
                     <thead> 
-                        <tr align="center"> 
-                            <td>Producto</td> 
+                        <tr> 
+                            <td>Prducto</td> 
                             <td>Cantidad</td> 
                             <td>Precio</td> 
-                            <td>Subtotal</td>
+                            <td>Subtotal</td> 
                         </tr>
-                    </thead> 
+                    </thead>
                     {% for pedidoProducto in pedidoProductos %}
                         {% if pedido.id == pedidoProducto.pedido.id %}
                             <tr>
@@ -27,11 +29,10 @@
                         {% endif %}
                     {% endfor %}
                     <tr>
-                        <td colspan="4">Total: $ {{ pedido.total }}</td>
+                        <td>Total: $ {{ pedido.total }}</td>
                     </tr> 
                 </table>
-                <button><a href="/confirmar_pedido/{{pedido.id}}">Confirmar pedido</a></button>
-                <button><a href="/rechazar_pedido/{{pedido.id}}">Rechazar pedido</a></button>
+                <button><a href="/añadir_bloque/{{pedido.id}}">Añadir a bloque</a></button> 
             {% endif %}
         {% endfor %}
     {% endif %}

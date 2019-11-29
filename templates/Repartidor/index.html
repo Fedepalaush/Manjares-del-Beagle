@@ -42,16 +42,16 @@
 
 	<script>
 		var markersData = [
-			{% for pedido in pedidos %}
-					{ 
-						id: {{pedido.id}},
-						lat: {{pedido.mapa.latitud}},
-						long: {{pedido.mapa.longitud}},
-						nombre: '{{pedido.nombre_cliente}}',
-						dir: '{{pedido.mapa.direccion}}',
-						telefono: {{pedido.telefono_cliente}},
-						formaPago: {{pedido.pago}}
-					},
+			{% for pedido in pedidos_bloque %}
+				{ 
+					id: {{pedido.id}},
+					lat: {{pedido.mapa.latitud}},
+					long: {{pedido.mapa.longitud}},
+					nombre: '{{pedido.nombre_cliente}}',
+					dir: '{{pedido.mapa.direccion}}',
+					telefono: {{pedido.telefono_cliente}},
+					formaPago: '{{pedido.pago}}'
+				},
 			{% endfor %}
 		];
 	</script>

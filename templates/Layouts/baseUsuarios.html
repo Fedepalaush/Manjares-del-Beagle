@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/estiloCliente.css' %}">
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Manjares del Beagle</title>
+    {% block title %}
+      <!-- <title>Manjares del Beagle</title> -->
+    {% endblock %}
     <link rel="shortcut icon" type="image/x-icon" href="media/logo.ico" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -25,7 +27,7 @@
     <div class="row">
       <!-- Logo -->
         <div class="col-sm-2">
-          <img src="/media/logo.png" href="{%url 'indexCliente'%}" class="rounded float-left" height="100px" width="100px">
+          <a href="{% url 'index_administrador' %}"><img src="/media/logo.png" class="rounded float-left" height="100px" width="100px"></a>
       </div>
       <div class="col-sm-8">
           <font style="float: center;" class="nav-link" face="impact" size="8" color="green">MANJARES DEL BEAGLE</font>
@@ -33,30 +35,8 @@
       <!-- Carrito -->
       <div class="col-sm-2">
         <div class="row">
-            <div class="col-1 text-left">
-              <!-- Nombre del Usuario -->
-              <h5><b>Nombre Usuario</b></h5>
-            </div>
-            <div class="col-10 text-right">
-              <img src="media/DefaultPerfil.png" class="rounded float-left-center" height="50px" width="50px">
-            </div>
-            <div class="w-100"></div>
             <div class="col text-center">
-              <div class="dropdown">
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                Opciones
-                </button>
-                <!-- Datos del Usuario -->
-                <div class="dropdown-menu">
-                  <!-- Modificar datos del Usuario -->
-                  <a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i>  
-                  Editar Perfil</a>
-                  <div class="dropdown-divider"></div>
-                  <!-- Vuelve al Login -->
-                  <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>  
-                  Cerrar Sesión</a>
-                </div>
-              </div>
+              <a class="btn btn-success" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
             </div>
           </div>
       </div>

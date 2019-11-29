@@ -76,6 +76,11 @@
             <input id="direccion" type="text" name="direccion" size="50" placeholder="Ingrese su dirección..."
             autocomplete="on" runat="server" style="display: none" />
         </fieldset>
+        <fieldset style="width: 400px; border:1px solid black">
+            <legend class="w-auto">Pago</legend>
+            <input name="pago" type="radio" value="efectivo" onclick="ocultarPago()" />Efectivo.<br>
+            <input name="pago" type="radio" value="online" onclick="mostrarPago()" />Online.
+        </fieldset>
 
         <input id="latitud" type="hidden" name="latitud" ><br>
         <input id="longitud" type="hidden" name="longitud" ><br>
@@ -85,6 +90,17 @@
     </div>
     </form>
     <!-- FIN FORMULARIO -->
+    <!-- BOTON PAGAR MERCADO PAGO -->
+        <div id="pago_online" style="display: none">
+            <form action="/carrito" method="POST">
+                {% csrf_token %}
+                 <script
+                    src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                    data-preference-id="{{preference_id}}">
+                </script>
+            </form>
+        </div>
+    <!-- FIN MERCADO PAGO -->
 </div>
 
     <script>
@@ -100,24 +116,29 @@
         }
     </script>
 
-<!-- BOTON PAGAR MERCADO PAGO -->
-
-<form action="/carrito" method="POST">
-    {% csrf_token %}
-    <script
-     src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-     data-preference-id="{{preference_id}}">
-    </script>
-</form>
-
-<!-- FIN MERCADO PAGO -->
-
 <script>
+    //DIRECCION
     function mostrarDireccion() {
         document.getElementById("direccion").style.display= "inline";
     }
     function ocultarDireccion() {
         document.getElementById("direccion").style.display= "none";
+    }
+    //PAGO
+    function mostrarPago() {
+        document.getElementById("pago_online").style.display= "inline";
+    }
+    function ocultarPago() {
+        document.getElementById("pago_online").style.display= "none";
+    }
+</script>
+<script>
+      function obtenerDireccion() {
+        if (document.getElementById('direccion').value == "") {
+            document.getElementById('direccion').value = "-";
+            document.getElementById('latitud').value = 0
+            document.getElementById('longitud').value = 0
+        }
     }
 </script>
 

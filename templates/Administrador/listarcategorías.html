@@ -1,34 +1,30 @@
+{% extends 'Layouts/baseUsuarios.html'%}
 {% load static %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Listado de Categorías</title>
-</head>
-<body>
-
-<table class="table table-bordered">
-	<thead>
-		<tr>
-            <td>Categoría</td>
-			<td>Acciones</td>
-		</tr>
-    </thead>
- {% if categorías %}
-      {% for item in categorías %}
-    <tr>
-      <td>  {{item.nombre}}</td>
-          <td><a class="btn btn-danger" href="{% url 'borrar_categoria' item.nombre %}">Borrar</a>
-          </td>
-
-    </tr>
-
-  {% endfor %}
-</table>
-   {% else %}
-      <h1>No hay registros de categorías</h1>
-    {% endif %}
-<script src="{% static 'js/bootstrap.min.js'%}"></script>
-</body>
-</html>
+{% block title %}
+  <title>Lista de Categorías</title>
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-sm-12" align="center">
+      <table class="table table-bordered">
+        <thead>
+          <tr align="center">
+            <td>Categorías</td>
+            <td colspan="2">Acciones</td>
+          </tr>
+        </thead>
+        {% if categorías %}
+          {% for item in categorías %}
+            <tr>
+              <td>{{item.nombre}}</td>
+              <td><a class="btn btn-primary" href="{% url 'editar_categoria' item.nombre %}">Editar</a></td>
+              <td><a class="btn btn-success" href="{% url 'borrar_categoria' item.nombre %}">Borrar</a></td>
+            </tr>
+          {% endfor %}
+      </table>
+        {% else %}
+          <h1>No hay registro de categorías</h1>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}

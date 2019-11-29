@@ -45,13 +45,13 @@ class BloqueForm(forms.ModelForm):
 
 		fields = [
 			'id',
-			'fecha',
-			'usuario',
+			'fecha'		
 		]
+
 		labels = {
 			'id': 'ID',
 			'fecha': 'Fecha',
-			'usuario': 'Usuario'}
+			}
 
 
 
@@ -133,6 +133,7 @@ class DatosClienteForm(forms.Form):
 	direccion = forms.CharField()
 	latitud = forms.CharField()
 	longitud = forms.CharField()
+	pago = forms.CharField()
 
 class UserForm(UserCreationForm):
 

@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
     <meta  http-equiv = "refresh"  content = "30">
-    <h1>Pedidos pendientes</h1>
+    <h1>Pedidos listos</h1>
     {% if pedidos %} 
         {% for pedido in pedidos %}
-            {% if pedido.estadoPedido.estado == 'pendiente' %}
+            {% if pedido.estadoPedido.estado == 'listo' %}
                 <h3>ID Pedido: {{ pedido.id }}</h3>
-                <h4>Cliente: {{pedido.nombre_cliente}}</h4>
+                <h3>ID Bloque: {{ pedido.bloque.id }}</h3>
+                <h4>Cliente: {{pedido.cliente.nombre}}</h4>
                 <table class="table">
                     <thead> 
-                        <tr align="center"> 
-                            <td>Producto</td> 
+                        <tr> 
+                            <td>Prducto</td> 
                             <td>Cantidad</td> 
                             <td>Precio</td> 
-                            <td>Subtotal</td>
+                            <td>Subtotal</td> 
                         </tr>
                     </thead> 
                     {% for pedidoProducto in pedidoProductos %}
@@ -27,12 +28,11 @@
                         {% endif %}
                     {% endfor %}
                     <tr>
-                        <td colspan="4">Total: $ {{ pedido.total }}</td>
-                    </tr> 
+                        <td>Total: $ {{ pedido.total }}</td>
+                    </tr>
                 </table>
-                <button><a href="/confirmar_pedido/{{pedido.id}}">Confirmar pedido</a></button>
-                <button><a href="/rechazar_pedido/{{pedido.id}}">Rechazar pedido</a></button>
             {% endif %}
         {% endfor %}
     {% endif %}
+    <button><a href="/enviar_repartidor">Enviar a repartidor</a></button>
 {% endblock %}
