@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
     <meta  http-equiv = "refresh"  content = "30">
-    <h1>Pedidos preparandose</h1>
-    <button><a href="/nuevo_bloque">Nuevo bloque</a></button>
-    <h3>Numero de bloque: {{ultimo_bloque.id}}</h3>
+    <h1>Historial de pedidos</h1>
+    <br>
     {% if pedidos %} 
         {% for pedido in pedidos %}
-            {% if pedido.estadoPedido.estado == 'confirmado' %}
+
+            {% if pedido.estadoPedido.estado == 'entregado' %}
                 <h3>Pedido numero: {{ pedido.id }}</h3>
                 <h3>Cliente: {{pedido.nombre_cliente}}</h3>
                 <h3>Descripcion: {{pedido.descripcion}}</h3>
                 <h3>Direccion: {{pedido.mapa.direccion}}</h3>
+                <h3>Telefono: {{pedido.telefono}}</h3>
                 <table class="table">
                     <thead> 
                         <tr> 
@@ -34,12 +35,6 @@
                         <td>Total: $ {{ pedido.total }}</td>
                     </tr> 
                 </table>
-                {% if pedido.mapa.direccion == 'General Manuel Belgrano 43' %}
-                    <button> <a href="/pedido_entregado/{{pedido.id}}">Pedido entregado</a></button>
-                {% endif %}
-                {% if pedido.mapa.direccion != 'General Manuel Belgrano 43' %}
-                    <button><a href="/añadir_bloque/{{pedido.id}}">Añadir a bloque</a></button> 
-                {% endif %}
             {% endif %}
         {% endfor %}
     {% endif %}

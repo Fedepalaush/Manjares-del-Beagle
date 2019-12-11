@@ -4,6 +4,7 @@ from rotiseria.models import Pedido, Mapa, Bloque
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import permission_required
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 @login_required(redirect_field_name='login')
@@ -12,14 +13,13 @@ def mapa(request):
     return render (request,'Repartidor/index.html')
 
 
-
 class ListarDatosMapa (ListView):
     model = Mapa
     template_name = "Repartidor/index.html"
 
     def get(self, request, *args, **kwargs):
         if not(request.user.has_perm('rotiseria.es_repart')):
-                return redirect(reverse_lazy('login'))
+            return redirect(reverse_lazy('login'))
         bloques = Bloque.objects.all()
         #bloques empieza del ID 0 (cero)
         id = len(bloques) - 1

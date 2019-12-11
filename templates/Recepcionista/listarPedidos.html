@@ -5,8 +5,11 @@
     {% if pedidos %} 
         {% for pedido in pedidos %}
             {% if pedido.estadoPedido.estado == 'pendiente' %}
-                <h3>ID Pedido: {{ pedido.id }}</h3>
-                <h4>Cliente: {{pedido.nombre_cliente}}</h4>
+                <h3>Pedido numero: {{ pedido.id }}</h3>
+                <h3>Cliente: {{pedido.nombre_cliente}}</h3>
+                <h3>Descripcion: {{pedido.descripcion}}</h3>
+                <h3>Direccion: {{pedido.mapa.direccion}}</h3>
+                <h3>Telefono: {{pedido.telefono}}</h3>
                 <table class="table">
                     <thead> 
                         <tr align="center"> 
