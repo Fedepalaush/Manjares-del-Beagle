@@ -1,6 +1,55 @@
 {% extends 'Cliente/base.html'%}
 {% load static %}
+{% block navbar %}
+    <!-- Cabecera -->
+  <div class="jumbotron text-center" style="background-image: url(media/Textura.jpg); background-size: 100%; padding-top: 2%; padding-bottom: 1%;">
+   <div class="row">
+     <!-- Logo -->
+       <div class="col-sm-2">
+         <a href="{% url 'indexCliente' %}"><img src="/media/logo.png" class="rounded float-left" height="100px" width="100px"></a>
+     </div>
+     <div class="col-sm-8">
+         <font style="float: center;" class="nav-link" face="impact" size="8" color="green">MANJARES DEL BEAGLE</font>
+     </div>
+     <!-- Carrito -->
+     <div class="col-sm-2">
+       <a href="{% url 'carrito' %}">
+         <h1 id='numero_carrito '>{{items}}</h1>
+         <i class="fas fa-shopping-cart" style="width: 50px; height: 50px; float: right; color: green;"></i>
+       </a>
+     </div>
+   </div>
 
+   <hr style="background-color: black; width: 80%">
+
+   <nav class="navbar navbar-expand-lg">
+     <div class="container">
+       <div class="navbar-collapse collapse" id="navbar10">
+         <ul class="navbar-nav nav-fill w-100">
+           <li class="nav-item" style="font-family: 'impact', Times, serif; font-size: 25px;">
+             <div class="btn-group">
+               <!-- Titulo Categoria -->
+               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: green">CATEGORIAS</a>
+               <div class="dropdown-menu">
+                 {% for categoria in categorias %}
+                   <a class="dropdown-item" href="#">{{categoria.nombre}}</a>
+                 {% endfor %}
+               </div>
+             </div>
+           </li>
+           <li class="nav-item" style="font-family: 'impact', Times, serif; font-size: 25px;">
+             <a class="nav-link" href="{%url 'quienesSomos'%}" style="color: green">¿QUIENES SOMOS?</a>
+           </li>
+           <li class="nav-item" style="font-family: 'impact', Times, serif; font-size: 25px;">
+             <a class="nav-link" href="{%url 'contacto'%}" style="color: green">CONTACTO</a>
+           </li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+   <hr style="background-color: black; width: 80%">
+ </div>
+ {% endblock %}
    <!-- Menu principal del dia por defecto -->
    <!-- Si selecciona una categoria, se actualiza el contenido -->
    {% block content %}
@@ -44,6 +93,7 @@
             body: new FormData(document.getElementById('formCarrito'+producto_id))
          });
          alert("Se agrego tu producto al carrito.");
+
          return false;
       }
    </script>
