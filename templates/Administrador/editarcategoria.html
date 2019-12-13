@@ -6,19 +6,20 @@
 {% endblock %}
 {% block content %}
     <a href="{% url 'listar_categoria' %}" class="btn btn-success">Atrás</a> <br>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <form method="post">
-                {% csrf_token %}
-                <div id="div_id_nombre" class="form-group">
-                    <label for="id_nombre" class=" requiredField">Nombre</label>
-                    <div class="">
-                        <input type="text" name="nombre" value={{categoria.nombre}} maxlength="50" class="textinput textInput form-control" required id="id_nombre">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div id="div_id_nombre" class="form-group">
+                        <label for="id_nombre" class=" requiredField">Nombre</label>
+                        <div class="">
+                            <input type="text" name="nombre" value='{{categoria.nombre}}' maxlength="50" class="textinput textInput form-control" required id="id_nombre">
+                        </div>
                     </div>
-                </div>
-                <input type="submit" value="Modificar">
-            </form>
+                    <input type="submit" value="Modificar">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

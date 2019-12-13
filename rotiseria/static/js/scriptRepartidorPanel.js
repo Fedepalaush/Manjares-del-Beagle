@@ -8,6 +8,7 @@ function mostrar() {
   document.getElementById('nombre').innerHTML = '<b>Nombre: </b>'+ pedidoActivo.nombre;
   document.getElementById('telefono').innerHTML = '<b>Teléfono: </b>'+ pedidoActivo.telefono;
   document.getElementById('pago').innerHTML = '<b>Forma de pago: </b>'+ pedidoActivo.formaPago;
+  document.getElementById('entregado').href = '/entregar_pedido/' + pedidoAnterior.id;
 }
 function ocultar() {
   document.getElementById('contenedor').style.height = '0';
