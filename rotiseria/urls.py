@@ -1,6 +1,6 @@
 from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,editarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, editarcategoria
-from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados, pedidosListos, añadir_bloque, enviar_repartidor, nuevo_bloque
+from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados, pedidosListos, añadir_bloque, enviar_repartidor, nuevo_bloque, pedido_entregado, historial_pedidos
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos, contacto
 from rotiseria.View.Repartidor import ListarDatosMapa, entregar_pedido
 from rotiseria.View.Sesion import SignIn, register, login
@@ -46,6 +46,8 @@ path('confirmar_pedido/<int:id>/', confirmar_pedido, name = 'confirmar_pedido'),
 path('rechazar_pedido/<int:id>/', rechazar_pedido, name = 'rechazar_pedido'),
 path('enviar_repartidor', enviar_repartidor, name = 'enviar_repartidor'),
 path('nuevo_bloque', nuevo_bloque, name = 'nuevo_bloque'),
+path('pedido_entregado/<int:id>/', pedido_entregado, name='pedido_entregado'),
+path('historial_pedidos', historial_pedidos, name='historial_pedidos'),
 
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 

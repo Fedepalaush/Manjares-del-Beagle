@@ -1,10 +1,21 @@
+{% extends 'Layouts/baseUsuarios.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  <title>Eliminar {{producto.nombre}}</title>
+{% endblock %}
 {% block content %}
-<form method = "post" enctype="multipart/form-data">
-        {% csrf_token %}
-   <h3>¿Desea eliminar el producto {{ producto.nombre}}?</h3>
-    <button class= "<btn btn-danger " type=" submit">Si, eliminar</button>
-    <a class= "btn btn-default" href="{% url 'index_administrador' %}">Cancelar</a>
-</form>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12" style="text-align: center">
+                <form method = "post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h3>¿Desea eliminar el producto {{producto.nombre}}?</h3>
+                    <button class= "<btn btn-danger " type=" submit">Si, eliminar</button>
+                    <a class= "btn btn-default" href="{% url 'listar_producto' %}">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

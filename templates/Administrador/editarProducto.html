@@ -5,7 +5,8 @@
   <title>Editar {{producto.nombre}}</title>
 {% endblock %}
 {% block content %}
-    <form method="post">{% csrf_token %}
+<form method="post">{% csrf_token %}
+    <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <a href="{% url 'listar_producto' %}" class="btn btn-success">Atrás</a>
@@ -42,5 +43,6 @@
                 <input type="submit" class="btn btn-success" value="Modificar">
             </div>
         </div>
-    </form>
+    </div>
+</form>
 {% endblock %}

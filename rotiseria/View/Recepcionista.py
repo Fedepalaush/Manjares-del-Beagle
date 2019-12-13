@@ -49,7 +49,7 @@ class ListarPedido(ListView):
         if not(request.user.has_perm('rotiseria.es_recep')):
                 return redirect(reverse_lazy('login'))
         #Con esto le paso el total como unico valor sumado de todos los productos del pedido
-        pedidos = Pedido.objects.all()
+        pedidos = Pedido.objects.order_by('-id')
         pedidoProductos = PedidoProducto.objects.all()
         context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
         return render(request, self.template_name, context=context_dict)
@@ -57,7 +57,7 @@ class ListarPedido(ListView):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_recep')
 def pedidosConfirmados(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.order_by('-id')
     pedidoProductos = PedidoProducto.objects.all()
     context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
     return render(request, 'Recepcionista/listarPedidosConfirmados.html', context=context_dict)
@@ -83,7 +83,7 @@ def rechazar_pedido(request, id):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_recep')
 def pedidosRechazados(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.order_by('-id')
     pedidoProductos = PedidoProducto.objects.all()
     context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
     return render(request, 'Recepcionista/listarPedidosRechazados.html', context=context_dict)    
@@ -91,7 +91,7 @@ def pedidosRechazados(request):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_recep')
 def pedidosListos(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.order_by('-id')
     pedidoProductos = PedidoProducto.objects.all()
     context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
     return render(request, 'Recepcionista/listarPedidosListos.html', context=context_dict)  
@@ -135,6 +135,22 @@ def nuevo_bloque(request):
     pedido = Pedido.objects.create(bloque = ultimo_bloque, nombre_cliente = "Manjares del Beagle", estadoPedido = estadoPedido, telefono_cliente = 425067, mapa = direccionCliente, pago = "-")
 
     pedidos = Pedido.objects.all()
-        
     context_dict = {'ultimo_bloque': ultimo_bloque, 'pedidos': pedidos}
     return render(request, 'Recepcionista/listarPedidosConfirmados.html', context=context_dict)  
+
+@login_required(redirect_field_name='login')
+@permission_required('rotiseria.es_recep')
+def pedido_entregado(request, id):
+    pedido = Pedido.objects.get(id = id)
+    estadoDelPedido = EstadoPedido.objects.get(estado = 'entregado')
+    pedido.estadoPedido = estadoDelPedido
+    pedido.save()
+    return HttpResponseRedirect('/pedidosConfirmados')
+
+@login_required(redirect_field_name='login')
+@permission_required('rotiseria.es_recep')
+def historial_pedidos(request):
+    pedidos = Pedido.objects.order_by('-id')
+    pedidoProductos = PedidoProducto.objects.all()
+    context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
+    return render(request, 'Recepcionista/historialPedidos.html', context=context_dict) 

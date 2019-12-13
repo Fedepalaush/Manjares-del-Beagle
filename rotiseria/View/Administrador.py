@@ -18,26 +18,25 @@ def indexAdministrador(request):
     return render(request, 'Administrador/indexAdministrador.html')
 
 class CrearProducto (CreateView):
-        model = Producto
-        form_class= ProductoForm
-        template_name = 'Administrador/crearproducto.html'
-        success_url = reverse_lazy('index_administrador')
+    model = Producto
+    form_class= ProductoForm
+    template_name = 'Administrador/crearproducto.html'
+    success_url = reverse_lazy('index_administrador')
 
-        def get(self, request):
-             if not(request.user.has_perm('rotiseria.es_admin')):
-                return redirect(reverse_lazy('login'))
-             categorias = Categoría.objects.all()
-             return render(request, 'Administrador/crearproducto.html', {"categorias": categorias})
+    def get(self, request):
+        if not(request.user.has_perm('rotiseria.es_admin')):
+            return redirect(reverse_lazy('login'))
+        categorias = Categoría.objects.all()
+        return render(request, 'Administrador/crearproducto.html', {"categorias": categorias})
 
 class ListarProducto (ListView):
     model = Producto
     template_name = "Administrador/listarproducto.html"
     form_class = ProductoForm
 
-
     def get(self, request, *args, **kwargs):
         if not(request.user.has_perm('rotiseria.es_admin')):
-                return redirect(reverse_lazy('login'))
+            return redirect(reverse_lazy('login'))
         productos = Producto.objects.all()
         context_dict = {'productos': productos}
         return render(request, self.template_name, context=context_dict)
@@ -46,11 +45,11 @@ class ListarProducto (ListView):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_admin')
 def BorrarProducto(request, nombrep):
-        producto = Producto.objects.get(nombre=nombrep)
-        if request.method == 'POST':
-          producto.delete()
-          return redirect('index_administrador')
-        return render(request, 'Administrador/borrarproducto.html', )
+    producto = Producto.objects.get(nombre=nombrep)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('listar_producto')
+    return render(request, 'Administrador/borrarproducto.html', )
 
 
 @login_required(redirect_field_name='login')
@@ -64,20 +63,20 @@ def editarProducto(request, id_producto):
         form = ProductoForm(request.POST, instance=producto)
         if form.is_valid():
             form.save()
-        return redirect('index_administrador')
+        return redirect('listar_producto')
     return render (request, 'Administrador/editarProducto.html', {'form':form, 'producto':producto,'categorias':categorias})
 
 class CrearCategoria(CreateView):
-        model = Categoría
-        form_class = CategoriaForm
-        template_name = 'Administrador/crearcategoria.html'
-        success_url = reverse_lazy('index_administrador')
+    model = Categoría
+    form_class = CategoriaForm
+    template_name = 'Administrador/crearcategoria.html'
+    success_url = reverse_lazy('index_administrador')
 
-        def get(self, request):
-             if not(request.user.has_perm('rotiseria.es_admin')):
-                return redirect(reverse_lazy('login'))
-             categorias = Categoría.objects.all()
-             return render(request, self.template_name, {"categorias": categorias})
+    def get(self, request):
+        if not(request.user.has_perm('rotiseria.es_admin')):
+            return redirect(reverse_lazy('login'))
+        categorias = Categoría.objects.all()
+        return render(request, self.template_name, {"categorias": categorias})
 
 
 class ListarCategorias (ListView):
@@ -87,7 +86,7 @@ class ListarCategorias (ListView):
 
     def get(self, request, *args, **kwargs):
         if not(request.user.has_perm('rotiseria.es_admin')):
-                return redirect(reverse_lazy('login'))
+            return redirect(reverse_lazy('login'))
         categorías = Categoría.objects.all()
         context_dict = {'categorías': categorías}
         return render(request, self.template_name, context=context_dict)
@@ -95,11 +94,11 @@ class ListarCategorias (ListView):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_admin')
 def BorrarCategoría(request, nombrec):
-        categoría = Categoría.objects.get(nombre=nombrec)
-        if request.method == 'POST':
-         categoría.delete()
-         return redirect('index_administrador')
-        return render(request, 'Administrador/borrarcategoría.html', {'categoría':categoría})
+    categoría = Categoría.objects.get(nombre=nombrec)
+    if request.method == 'POST':
+        categoría.delete()
+        return redirect('listar_categoria')
+    return render(request, 'Administrador/borrarcategoría.html', {'categoría':categoría})
 
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_admin')
@@ -111,5 +110,5 @@ def editarcategoria (request, nombre):
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
             form.save()
-        return redirect('index_administrador')
+        return redirect('listar_categoria')
     return render (request, 'Administrador/editarcategoria.html', {'form':form, 'categoria':categoria})        
