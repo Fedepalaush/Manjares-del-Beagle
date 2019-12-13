@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView
-from rotiseria.models import Bloque, Pedido, PedidoProducto, EstadoPedido
+from rotiseria.models import Bloque, Pedido, PedidoProducto, EstadoPedido, Mapa
 from rotiseria.forms import BloqueForm, PedidoForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -15,7 +15,6 @@ class CrearBloque(CreateView):
     template_name = 'Recepcionista/crearBloque.html'
     success_url = reverse_lazy('index')
 
-    
     def get (self,request):
         if not(request.user.has_perm('rotiseria.es_recep')): 
             return redirect(reverse_lazy('login'))   
@@ -58,17 +57,17 @@ class ListarPedido(ListView):
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_recep')
 def pedidosConfirmados(request):
-        pedidos = Pedido.objects.all()
-        pedidoProductos = PedidoProducto.objects.all()
-        context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
-        return render(request, 'Recepcionista/listarPedidosConfirmados.html', context=context_dict)
+    pedidos = Pedido.objects.all()
+    pedidoProductos = PedidoProducto.objects.all()
+    context_dict = {'pedidos': pedidos, 'pedidoProductos': pedidoProductos}
+    return render(request, 'Recepcionista/listarPedidosConfirmados.html', context=context_dict)
 
 @login_required(redirect_field_name='login')
 @permission_required('rotiseria.es_recep')
 def confirmar_pedido(request, id):
     pedido = Pedido.objects.get(id =id)
-    estadoDelPedido = EstadoPedido.objects.get(estado = 'confirmado')
-    pedido.estadoPedido = estadoDelPedido
+    estadoConfirmado = EstadoPedido.objects.get(estado = 'confirmado')
+    pedido.estadoPedido = estadoConfirmado
     pedido.save()
     return HttpResponseRedirect('/recepcionista')
 
@@ -108,8 +107,8 @@ def añadir_bloque(request, id):
     ultimo_Bloque = bloques[id_bloque]
     
     pedido.bloque = ultimo_Bloque
-    estadoDelPedido = EstadoPedido.objects.get(estado = 'listo')
-    pedido.estadoPedido = estadoDelPedido
+    estadoEnviado = EstadoPedido.objects.get(estado = 'listo')
+    pedido.estadoPedido = estadoEnviado
     pedido.save()
     return HttpResponseRedirect('/pedidosConfirmados')
 
@@ -117,10 +116,11 @@ def añadir_bloque(request, id):
 @permission_required('rotiseria.es_recep')
 def enviar_repartidor(request):
     pedidos = Pedido.objects.all()
-    estado_pedido = EstadoPedido.objects.get(estado = 'enviado')
+    estadoEnviado = EstadoPedido.objects.get(estado = 'enviado')
     for pedido in pedidos:
         if pedido.estadoPedido.estado == 'listo':
-            pedido.estadoPedido = estado_pedido
+            #si el pedido esta listo, se lo cambia a enviado
+            pedido.estadoPedido = estadoEnviado
             pedido.save()
     return HttpResponseRedirect('/pedidosListos')
 
@@ -129,6 +129,11 @@ def enviar_repartidor(request):
 @permission_required('rotiseria.es_recep')
 def nuevo_bloque(request):
     ultimo_bloque = Bloque.objects.create()
+    estadoPedido = EstadoPedido.objects.get(estado = 'enviado')
+    direccionCliente = Mapa.objects.create(latitud = -54.809196, longitud = -68.3141325, direccion = "Gral. Manuel Belgrano 43")
+    direccionCliente.save()
+    pedido = Pedido.objects.create(bloque = ultimo_bloque, nombre_cliente = "Manjares del Beagle", estadoPedido = estadoPedido, telefono_cliente = 425067, mapa = direccionCliente, pago = "-")
+
     pedidos = Pedido.objects.all()
         
     context_dict = {'ultimo_bloque': ultimo_bloque, 'pedidos': pedidos}

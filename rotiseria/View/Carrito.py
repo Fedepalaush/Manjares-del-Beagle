@@ -17,9 +17,9 @@ mp = mercadopago.MP("2976477610493912", "36kgwdIqyhQeJylWXK8ftz692RzBWIYg")
 class VistaCarrito(View):
 
     def obtenerCarrito(request):
- 
-        if 'alimentos' not in request.session:
-            HttpResponseRedirect('')
+        if not (request.session['alimentos']):
+            messages.warning(request, 'Debe agregar por lo menos 1 producto a su carrito.')
+            return HttpResponseRedirect('/')
         else:
             form = ProductoIDForm()
             alimentos = request.session['alimentos']
@@ -99,7 +99,6 @@ class VistaCarrito(View):
                 pago = form.cleaned_data['pago']
                 #Obtenemos solo la direccion con el numero, nada mas...
                 direccion = VistaCarrito.obtenerDireccion(dire)
-                descripcion = VistaCarrito.obtenerDescripcion(descripcion)
                 estaEnbd = False
                 if direccion == '': #Si la direccion es vacia es xq retira en la rotiseria
                     direccionCliente = Mapa.objects.get(direccion = 'General Manuel Belgrano 43')
@@ -113,26 +112,29 @@ class VistaCarrito(View):
                     if estaEnbd == False:
                         direccionCliente = Mapa.objects.create(latitud = latitud, longitud = longitud, direccion = direccion)
                         direccionCliente.save()
-            alimentos = request.session['alimentos']
-            bloque = Bloque.objects.get(id = 1)
-            estadoPedido = EstadoPedido.objects.get(estado = 'pendiente')
-            pedido = Pedido.objects.create(bloque = bloque, nombre_cliente = nombreApellido, estadoPedido = estadoPedido, descripcion = descripcion, telefono_cliente = celular, mapa = direccionCliente)
-            total = 0
-            #datos[0] -> id alimento // datos[1] -> cantidad de alimentos
-            for alimentoID, datos  in alimentos.items():
-                producto = Producto.objects.get(id = int(alimentoID))
-                subtotal = getattr(producto, 'precioActual')*datos[1]
-                total += subtotal
-                precioActual = producto.precioActual
-                pedidoProducto = PedidoProducto.objects.create(producto=producto, pedido=pedido,
-                                                               precioVariable= precioActual, subtotal=subtotal,
-                                                               cantidad=datos[1])
-            pedido.pago = pago
-            pedido.total = total
-            pedido.save()
-            request.session.flush()
-
-        return HttpResponseRedirect('/')
+                alimentos = request.session['alimentos']
+                bloque = Bloque.objects.get(id = 1)
+                estadoPedido = EstadoPedido.objects.get(estado = 'pendiente')
+                pedido = Pedido.objects.create(bloque = bloque, nombre_cliente = nombreApellido, estadoPedido = estadoPedido, descripcion = descripcion, telefono_cliente = celular, mapa = direccionCliente)
+                total = 0
+                #datos[0] -> id alimento // datos[1] -> cantidad de alimentos
+                for alimentoID, datos  in alimentos.items():
+                    producto = Producto.objects.get(id = int(alimentoID))
+                    subtotal = getattr(producto, 'precioActual')*datos[1]
+                    total += subtotal
+                    precioActual = producto.precioActual
+                    pedidoProducto = PedidoProducto.objects.create(producto=producto, pedido=pedido,
+                                                                precioVariable= precioActual, subtotal=subtotal,
+                                                                cantidad=datos[1])
+                pedido.pago = pago
+                pedido.total = total
+                pedido.save()
+                request.session.flush()
+                messages.warning(request, 'Tu pedido fue confirmado.')
+                return HttpResponseRedirect('/')
+            else:
+                messages.warning(request, 'Formulario inválido. Completar todos los datos.')
+                return HttpResponseRedirect('/carrito')
 
     def obtenerDireccion(dire):
         i = 0
@@ -142,9 +144,4 @@ class VistaCarrito(View):
                 d = d + dire[i]
                 i = i + 1
         return d
-
-    def obtenerDescripcion(desc):
-        if desc == '-':
-            desc = ""
-        return desc
     

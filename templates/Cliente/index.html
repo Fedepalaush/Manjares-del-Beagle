@@ -1,16 +1,25 @@
 {% extends 'Cliente/base.html'%}
 {% load static %}
-
    <!-- Menu principal del dia por defecto -->
    <!-- Si selecciona una categoria, se actualiza el contenido -->
    {% block content %}
+      <div id="mensajes">
+         {% for message in messages %}
+         <div class="alert {{message.tags}} alert-dismissible" role="alert">
+            <button type="button" id="btnMje" class="close" data-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>{{message}}
+         </div>
+         {% endfor %}
+      </div>
+
       <div class="container">
          <div class="row">
             {% for categoria in categorias %}
                <!-- Titulo Categoria -->
-               <div class="col-sm-12">
+               <div class="col-sm-12" id="{{categoria.nombre}}">
                   <h1 style="text-align: center">{{categoria.nombre}}</h1>
-                  <hr style="background-color: black; width: 40%">
+                  <hr style="background-color: black; width: 50%">
                   <br>
                </div>
                {% for producto in productos %}

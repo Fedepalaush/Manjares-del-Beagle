@@ -1,6 +1,7 @@
 //Iniciamos el mapa con los marcadores del JSON
 var panorama;
 var pedidoActivo;
+var pedidoAnterior;
 
 function initMap(){
   var ushuaia = {lat:-54.8161769 ,lng: -68.3278668};
@@ -14,85 +15,97 @@ function initMap(){
   var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var labelIndex = 0;
 
-  //MARCADOR DE INICIO ESTATICO - MANJARES DEL BEAGLE
-  var markerInicio = new google.maps.Marker({
-    position: {lat: -54.809196,lng: -68.3141325},
-    label: labels[labelIndex++ % labels.length],
-    map: map
-  });
-  markerInicio.addListener('click', function(){
-    var content = '<h4>' + 'Gral. Manuel Belgrano 43' + '</h4>' +
-      '<h6> Manjares del Beagle </h6>';
-      informacion.setContent(content);
-      informacion.open(map, this);
-    });
-
-  var informacion = new google.maps.InfoWindow();
-
   //ARREGLO DE MARCADORES
   var markers = [];
-  //AGREGO EL MARCADOR DE INICIO
-  markers.push(markerInicio);
-  for (var i=0; i<markersData.length; i++){
-    //MARKER: UN MARCADOR
-    var punto = {lat:markersData[i].lat ,lng: markersData[i].long};
-    var marker = new google.maps.Marker({
-      position: punto,
-      label: labels[labelIndex++ % labels.length],
-      map: map,
-      data: markersData[i]
-    });
-    marker.addListener('click', function(){
-      pedidoActivo = this.data;
-      var content = '<h4>' + this.data.dir + '</h4>' +
-        '<h6>Pedido N° ' + this.data.id + '</h6>' +
-        '<button type="button" class="btn btn-success" id="abrir" onclick="mostrar()">Detalles</button>' +
-        '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
-        '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
-        '<button type="button" class="btn btn-success">Entregado</button>';
-        informacion.setContent(content);
-        informacion.open(map, this);
-      });
-    markers.push(marker);
-  }
 
-  //streetView
-  panorama = map.getStreetView();
-  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: 265,
-    pitch: 0
-  }));
+  var informacion = new google.maps.InfoWindow();
+  if (!(markersData.length == 1)) {
+    for (var i=0; i<markersData.length; i++){
+      if (i == 0) {
+        pedidoAnterior = markersData[i];
+      }
+      var punto = {lat:markersData[i].lat ,lng: markersData[i].long};
   
+      var marker = new google.maps.Marker({
+        position: punto,
+        label: labels[labelIndex++ % labels.length],
+        map: map,
+        data: markersData[i]
+      });
+      puntoRoti = ((markersData[i].lat == -54.809196) && (markersData[i].long == -68.3141325))
+      if (puntoRoti) {
+        marker.addListener('click', function(){
+          var content = '<h4>' + this.data.dir + '</h4>' +
+            '<h6>' + this.data.nombre + '</h6>';
+            informacion.setContent(content);
+            informacion.open(map, this);
+        });
+      } else {
+        //si estado = entregado, entonces mostrar informacion entregada
+        if ((i == 0) && !(puntoRoti)) {
+          marker.addListener('click', function(){
+            var content = '<h4>' + this.data.dir + '</h4>' +
+              '<h6>Pedido N° ' + this.data.id + '</h6>' +
+              '<h6>¡ENTREGADO!</h6>';
+              informacion.setContent(content);
+              informacion.open(map, this);
+          });
+        } else {
+          //sino el estado esta como enviado, entonces agregar informacion completa
+          marker.addListener('click', function(){
+            pedidoActivo = this.data;
+            var content = '<h4>' + this.data.dir + '</h4>' +
+              '<h6>Pedido N° ' + this.data.id + '</h6>' +
+              '<button type="button" class="btn btn-success" id="abrir" onclick="mostrar()">Detalles</button>' +
+              '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
+              '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
+              '<a type="button" class="btn btn-success" href="javascript:location.reload()">Entregado</a>';
+              informacion.setContent(content);
+              informacion.open(map, this);
+          });
+        }
+      }
+      markers.push(marker);
+    }
 
-  //TRAZANDO EL CAMINO ENTRE EL MARCADOR INICIO -- (marcadores de por medio) -- FIN
-  var objConfigDR = {
-    map: map,
-    suppressMarkers: true,
-    sensor: false
-  }
-
-  var waypoints = [];
-  for (let index = 1; index < markers.length-1; index++) {
-    waypoints.push({location: markers[index].position, stopover: false});
-  };
+    //streetView
+    panorama = map.getStreetView();
+    panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+      heading: 265,
+      pitch: 0
+    }));
     
-  var objConfigDS = {
+
+    //TRAZANDO EL CAMINO ENTRE EL MARCADOR INICIO -- (marcadores de por medio) -- FIN
+    var objConfigDR = {
+      map: map,
+      suppressMarkers: true,
+      sensor: false
+    }
+
+    var waypoints = [];
+    for (var index = 0; index < markers.length; index++) {
+      waypoints.push({location: markers[index].position, stopover: false});
+    };
+      
+    var objConfigDS = {
       origin: markers[0].position, //Lat o Long - String
       destination: markers[markers.length-1].position,
       waypoints: waypoints,
       travelMode: google.maps.TravelMode.DRIVING
-  }
+    }
 
-  var ds = new google.maps.DirectionsService(); //obtiene las coordenadas
-  var dr = new google.maps.DirectionsRenderer(objConfigDR); //traduce coordenadas a la ruta visible
+    var ds = new google.maps.DirectionsService(); //obtiene las coordenadas
+    var dr = new google.maps.DirectionsRenderer(objConfigDR); //traduce coordenadas a la ruta visible
 
-  ds.route(objConfigDS, fnRutear);
-  function fnRutear(resultados, status) {
-      if (status == 'OK'){
-          dr.setDirections(resultados);
-      } else {
-          alert('Error: ' + status);
-      }
+    ds.route(objConfigDS, fnRutear);
+    function fnRutear(resultados, status) {
+        if (status == 'OK'){
+            dr.setDirections(resultados);
+        } else {
+            alert('Error: ' + status);
+        }
+    }
   }
   
 }

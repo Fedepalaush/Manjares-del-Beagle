@@ -11,7 +11,7 @@
                 <a href="{% url 'listar_producto' %}" class="btn btn-success">Atrás</a>
                 <div id="div_id_nombre" class="form-group">
                     <label for="id_nombre" class=" requiredField">Nombre</label>
-                    <input type="text" name="nombre" value={{producto.nombre}} maxlength="50" class="textinput textInput form-control" required id="id_nombre">
+                    <input type="text" name="nombre" value='{{producto.nombre}}' maxlength="50" class="textinput textInput form-control" required id="id_nombre">
                 </div>
                 <div id="div_id_descripcion" class="form-group">
                     <label for="id_descripcion" class="">Descripcion</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div id="div_id_foto" class="form-group">
                     <label for="id_foto" class=" requiredField">Imagen</label><br>
-                    <a href="/media/rotiseria/images/platja-nord-756x336_TYHTBKm.jpg">{{producto.foto}}</a>
+                    <img class="card-img-top" src="/media/{{producto.foto}}/" alt="Card image cap" width="100" height="200">
                     <br> Modificar:
                     <input type="file" name="foto" accept="image/*" class="clearablefileinput form-control" id="id_foto">
                 </div>

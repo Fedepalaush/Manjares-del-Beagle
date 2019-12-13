@@ -5,6 +5,7 @@
 	<title>Maps</title>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 	<link rel="stylesheet" href="{%static 'css/estiloRepartidor.css'%}">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
@@ -35,12 +36,14 @@
 		<hr style="background-color: black; width: 90%;">
 		<div class="row">
 			<div class="col-sm-12">
-				<button type="button" class="btn btn-success">Entregado</button>
+				<button class="btn btn-success"><a id="entregado">Entregado</a></button>
 			</div>
 		</div>
+		<hr style="background-color: black; width: 90%;">
 	</div>
 
 	<script>
+		//onclick="location.reload()" <a id="entregado" class="btn btn-success">Entregado</a>
 		var markersData = [
 			{% for pedido in pedidos_bloque %}
 				{ 
@@ -50,7 +53,8 @@
 					nombre: '{{pedido.nombre_cliente}}',
 					dir: '{{pedido.mapa.direccion}}',
 					telefono: {{pedido.telefono_cliente}},
-					formaPago: '{{pedido.pago}}'
+					formaPago: '{{pedido.pago}}',
+					estado: '{{pedido.estadoPedido.estado}}'
 				},
 			{% endfor %}
 		];

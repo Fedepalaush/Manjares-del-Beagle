@@ -2,7 +2,7 @@ from django.urls import path
 from rotiseria.View.Administrador import CrearProducto, ListarProducto, BorrarProducto,editarProducto, CrearCategoria, ListarCategorias, BorrarCategoría, index, indexAdministrador, editarcategoria
 from rotiseria.View.Recepcionista import CrearBloque, ListarBloque, BorrarBloque, ListarPedido, pedidosConfirmados, confirmar_pedido, rechazar_pedido, pedidosRechazados, pedidosListos, añadir_bloque, enviar_repartidor, nuevo_bloque
 from rotiseria.View.Cliente import CrearCliente, ListarCliente, BorrarCliente, CrearPedido, indexCliente, quienesSomos, contacto
-from rotiseria.View.Repartidor import ListarDatosMapa
+from rotiseria.View.Repartidor import ListarDatosMapa, entregar_pedido
 from rotiseria.View.Sesion import SignIn, register, login
 from rotiseria.View.Carrito import VistaCarrito
 from django.contrib.auth.views import logout_then_login
@@ -49,7 +49,10 @@ path('nuevo_bloque', nuevo_bloque, name = 'nuevo_bloque'),
 
 path('quienesSomos',quienesSomos, name = 'quienesSomos'),
 
-path('vistaMapa',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
+#repartidor
+path('repartidor',ListarDatosMapa.as_view(), name = 'listar_datos_mapa'),
+path('entregar_pedido/<int:id_pedido>/',entregar_pedido, name = 'entregar_pedido'),
+
 #iniciar sesion
 path('accounts/login/',login, name = 'login'),
 #cerrar sesion

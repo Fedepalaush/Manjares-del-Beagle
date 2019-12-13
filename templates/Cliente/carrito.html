@@ -48,6 +48,16 @@
 <hr style="height: 3px; background-color: black;" width="90%"/>
 <br>
 
+<div id="mensajes">
+    {% for message in messages %}
+      <div class="alert {{message.tags}} alert-dismissible" role="alert">
+        <button type="button" id="btnMje" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>{{message}}
+      </div>
+    {% endfor %}
+</div>
+
 <div class="row">
     <div class="col-sm-6">
     <!-- INICIO FORMULARIO -->
@@ -56,15 +66,15 @@
         <ul class="list-group list-group-flush" style="padding-left: 10%">
             <li class="list-group-item">
                 <label for="nombreApellido">Nombre: </label>
-                <input style="padding-left: 25%" id="nombreApellido" type="text" name="nombreApellido">
+                <input id="nombreApellido" type="text" name="nombreApellido">
             </li>
             <li class="list-group-item">
                 <label for="celular">Celular: </label>
-                <input style="padding-left: 25%" id="celular" type="text" name="celular">
+                <input id="celular" type="text" name="celular">
             </li>
             <li class="list-group-item">
                 <label for="descripcion">Descripción: </label>
-                <input style="padding-left: 25%" id="descripcion" type="text" name="descripcion">
+                <input id="descripcion" type="text" name="descripcion">
             </li>
         </ul>
     </div>
@@ -103,18 +113,18 @@
     <!-- FIN MERCADO PAGO -->
 </div>
 
-    <script>
-        function obtenerDireccion() {
+<script>
+    function obtenerDireccion() {
             if (document.getElementById('direccion').value == "") {
                 document.getElementById('direccion').value = "-";
                 document.getElementById('latitud').value = "0";
                 document.getElementById('longitud').value = "0";
             }
-            if (document.getElementById('descripcion').value == ""){
+            if (document.getElementById('descripcion').value == "") {
                 document.getElementById('descripcion').value = "-";
             }
-        }
-    </script>
+    }
+</script>
 
 <script>
     //DIRECCION
@@ -130,15 +140,6 @@
     }
     function ocultarPago() {
         document.getElementById("pago_online").style.display= "none";
-    }
-</script>
-<script>
-      function obtenerDireccion() {
-        if (document.getElementById('direccion').value == "") {
-            document.getElementById('direccion').value = "-";
-            document.getElementById('latitud').value = 0
-            document.getElementById('longitud').value = 0
-        }
     }
 </script>
 
