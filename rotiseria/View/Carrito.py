@@ -65,13 +65,18 @@ class VistaCarrito(View):
                     'alimentoID' : form.cleaned_data['alimento'],
                     'cantidad' : form.cleaned_data['cantidad']
                 }
-                request.session['items'] = request.session['items'] + contenido['cantidad']
-                if  contenido['alimentoID'] in request.session['alimentos']:
-                        cant = request.session['alimentos'][contenido['alimentoID']][1]
-                        request.session['alimentos'][contenido['alimentoID']][1] = contenido['cantidad'] + cant
-                else :
-                        request.session['alimentos'][contenido['alimentoID']] = contenido['alimentoID'], contenido['cantidad']
-
+            request.session['items'] = request.session['items'] + contenido['cantidad']
+            lista = request.session['alimentos']
+            elemento = str(contenido['alimentoID'])
+            cantidad = contenido
+            if  elemento in request.session['alimentos']:
+                    print ('si esta')
+                    cant = lista[elemento][1]
+                    request.session['alimentos'][elemento][1] = contenido['cantidad'] + cant
+            else:
+                    print ('no esta')
+                    request.session['alimentos'][contenido['alimentoID']] = [contenido['alimentoID'], contenido['cantidad']]
+                    print (request.session['alimentos'])
         return HttpResponse("ok")
 
     def eliminarItem(request):
@@ -144,4 +149,17 @@ class VistaCarrito(View):
                 d = d + dire[i]
                 i = i + 1
         return d
+<<<<<<< HEAD
     
+=======
+
+    def obtenerDescripcion(desc):
+        if desc == '-':
+            desc = ""
+        return desc
+    
+    def obtenerCantItems(request):
+
+        cantidadItems = ({'items':request.session['items']})
+        return HttpResponse(simplejson.dumps(cantidadItems), content_type='application/json')
+>>>>>>> 15d320752a1340c31e71ef4b3b8bb8296612e08b
