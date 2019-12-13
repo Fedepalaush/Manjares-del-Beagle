@@ -20,15 +20,17 @@ def quienesSomos(request):
 
 def indexCliente(request):
     if 'alimentos'not in request.session:
-            request.session['alimentos'] = {}
-            request.session['items'] = 0
+        request.session['alimentos'] = {}
+        request.session['items'] = 0
             
     categorias = Categoría.objects.all()
     productos = Producto.objects.all()
     #Numero de visitas contadas en esta variable de sesion
     num_visitas = request.session.get('num_visitas', 0)
     request.session['num_visitas'] = num_visitas+1
-    contexto = {'productos': productos, 'categorias': categorias, 'num_visitas': num_visitas}
+    items = request.session['items']
+    print (items)
+    contexto = {'productos': productos, 'categorias': categorias, 'num_visitas': num_visitas, 'items': items}
     return render(request, 'Cliente/index.html', contexto)
 
 class CrearCliente(CreateView):
