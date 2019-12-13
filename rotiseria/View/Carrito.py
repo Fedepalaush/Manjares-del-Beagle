@@ -149,9 +149,6 @@ class VistaCarrito(View):
                 d = d + dire[i]
                 i = i + 1
         return d
-<<<<<<< HEAD
-    
-=======
 
     def obtenerDescripcion(desc):
         if desc == '-':
@@ -162,4 +159,3 @@ class VistaCarrito(View):
 
         cantidadItems = ({'items':request.session['items']})
         return HttpResponse(simplejson.dumps(cantidadItems), content_type='application/json')
->>>>>>> 15d320752a1340c31e71ef4b3b8bb8296612e08b
