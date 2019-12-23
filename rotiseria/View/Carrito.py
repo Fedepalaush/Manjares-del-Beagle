@@ -154,8 +154,3 @@ class VistaCarrito(View):
         if desc == '-':
             desc = ""
         return desc
-    
-    def obtenerCantItems(request):
-
-        cantidadItems = ({'items':request.session['items']})
-        return HttpResponse(simplejson.dumps(cantidadItems), content_type='application/json')

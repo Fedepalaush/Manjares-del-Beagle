@@ -10,6 +10,7 @@
             <div class="col-md-6" >
                 <form method = "post" enctype="multipart/form-data">
                     {% csrf_token %}
+                   
                     <div id="div_id_nombre" class="form-group">
                         <label for="id_nombre" class=" requiredField">Nombre</label>
                         <input type="text" name="nombre" maxlength="50" class="textinput textInput form-control" required id="id_nombre">
@@ -29,7 +30,7 @@
                     <div>Categoria</div>
                     <select name="categoria" id="id_categoria">
                         {% for item in categorias %}
-                            <option value="{{item.nombre}}">{{item.nombre}}</option>
+                            <option value="{{item.pk}}">{{item.nombre}}</option>
                         {% endfor %}
                     </select>
                     <div id="div_id_ganancia" class="form-group">

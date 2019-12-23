@@ -32,8 +32,8 @@ function initMap(){
         map: map,
         data: markersData[i]
       });
-      puntoRoti = ((markersData[i].lat == -54.809196) && (markersData[i].long == -68.3141325))
-      if (puntoRoti) {
+      direccion = markersData[i].dir == 'General Manuel Belgrano 43'
+      if (direccion) {
         marker.addListener('click', function(){
           var content = '<h4>' + this.data.dir + '</h4>' +
             '<h6>' + this.data.nombre + '</h6>';
@@ -42,7 +42,7 @@ function initMap(){
         });
       } else {
         //si estado = entregado, entonces mostrar informacion entregada
-        if ((i == 0) && !(puntoRoti)) {
+        if ((i == 0) && !(direccion)) {
           marker.addListener('click', function(){
             var content = '<h4>' + this.data.dir + '</h4>' +
               '<h6>Pedido N° ' + this.data.id + '</h6>' +
@@ -58,8 +58,7 @@ function initMap(){
               '<h6>Pedido N° ' + this.data.id + '</h6>' +
               '<button type="button" class="btn btn-success" id="abrir" onclick="mostrar()">Detalles</button>' +
               '<input id="latitud" type="hidden" size="50" value="'+ this.data.lat +'"/>' +
-              '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>' +
-              '<a type="button" class="btn btn-success" href="javascript:location.reload()">Entregado</a>';
+              '<input id="longitud" type="hidden" size="50" value="'+ this.data.long +'"/>';
               informacion.setContent(content);
               informacion.open(map, this);
           });

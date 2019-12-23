@@ -6,8 +6,8 @@
     <br>
     {% if pedidos %} 
         {% for pedido in pedidos %}
-
-            {% if pedido.estadoPedido.estado == 'entregado' %}
+            {% if pedido.estadoPedido.estado == 'entregado' and not pedido.descripcion == 'INICIO' %}
+                
                 <div class="card">
                     <div class="card-header">
                         <h4>Pedido Nº: {{pedido.id}}</h4>

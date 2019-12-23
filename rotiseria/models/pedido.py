@@ -9,7 +9,7 @@ from datetime import datetime
 class Pedido (models.Model):
     id = models.AutoField(primary_key=True)
     fecha = models.DateTimeField(default = datetime.now)
-    total = models.DecimalField(max_digits=8, decimal_places=3, null=True)
+    total = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     productos = models.ManyToManyField(Producto)
     bloque = models.ForeignKey(Bloque, on_delete=models.CASCADE, blank=True)
     nombre_cliente = models.CharField(max_length= 40)

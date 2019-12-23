@@ -30,6 +30,7 @@
 				<h6 id="domicilio"></h6>
 				<h6 id="nombre"></h6>
 				<h6 id="telefono"></h6>
+				<h6 id="precio"></h6>
 				<h6 id="pago"></h6>
 			</div>
 		</div>
@@ -54,7 +55,8 @@
 					dir: '{{pedido.mapa.direccion}}',
 					telefono: {{pedido.telefono_cliente}},
 					formaPago: '{{pedido.pago}}',
-					estado: '{{pedido.estadoPedido.estado}}'
+					estado: '{{pedido.estadoPedido.estado}}',
+					precio: '{{pedido.total}}'
 				},
 			{% endfor %}
 		];

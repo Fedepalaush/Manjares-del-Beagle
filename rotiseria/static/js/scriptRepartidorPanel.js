@@ -7,6 +7,7 @@ function mostrar() {
   document.getElementById('domicilio').innerHTML = '<b>Dirección: </b>'+ pedidoActivo.dir;
   document.getElementById('nombre').innerHTML = '<b>Nombre: </b>'+ pedidoActivo.nombre;
   document.getElementById('telefono').innerHTML = '<b>Teléfono: </b>'+ pedidoActivo.telefono;
+  document.getElementById('precio').innerHTML = '<b>Total: </b>'+ pedidoActivo.precio;
   document.getElementById('pago').innerHTML = '<b>Forma de pago: </b>'+ pedidoActivo.formaPago;
   document.getElementById('entregado').href = '/entregar_pedido/' + pedidoAnterior.id;
 }

@@ -46,7 +46,7 @@
                   <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: green">CATEGORIAS</a>
                   <div class="dropdown-menu">
                     {% for categoria in categorias %}
-                      <a class="dropdown-item" href= "#{{categoria.nombre}}" data-scroll>{{categoria.nombre}}</a>
+                      <a class="dropdown-item" href= "#{{categoria.pk}}" data-scroll>{{categoria.pk}}</a>
                     {% endfor %}
                   </div>
                 </div>

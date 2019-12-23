@@ -130,9 +130,10 @@ def enviar_repartidor(request):
 def nuevo_bloque(request):
     ultimo_bloque = Bloque.objects.create()
     estadoPedido = EstadoPedido.objects.get(estado = 'enviado')
-    direccionCliente = Mapa.objects.create(latitud = -54.809196, longitud = -68.3141325, direccion = "Gral. Manuel Belgrano 43")
-    direccionCliente.save()
-    pedido = Pedido.objects.create(bloque = ultimo_bloque, nombre_cliente = "Manjares del Beagle", estadoPedido = estadoPedido, telefono_cliente = 425067, mapa = direccionCliente, pago = "-")
+    #PREGUNTAR SI LA DIRECCION YA EXISTE, SINO CREARLA (XQ SE CREAN MUCHAS IGUALES)
+    direccionCliente = Mapa.objects.get(direccion = "General Manuel Belgrano 43")
+    #AGREGAR EN DESCRIPCION - "INICIO" O EN PAGO - "SIN PAGAR"
+    pedido = Pedido.objects.create(bloque = ultimo_bloque, nombre_cliente = "Manjares del Beagle", estadoPedido = estadoPedido, descripcion = "INICIO", telefono_cliente = 425067, mapa = direccionCliente, pago = "-")
 
     pedidos = Pedido.objects.all()
     context_dict = {'ultimo_bloque': ultimo_bloque, 'pedidos': pedidos}

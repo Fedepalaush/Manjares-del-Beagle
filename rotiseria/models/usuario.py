@@ -9,12 +9,10 @@ class Usuario (models.Model):
     def __str__(self):
         return self.user.username
 
-
     class Meta:
         permissions = (
             ('es_admin', 'Es_Admin'),
             ('es_repart', 'Es_Repart'),
             ('es_recep', 'Es_Recep'),
-
         )
 

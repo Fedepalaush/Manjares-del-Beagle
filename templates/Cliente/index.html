@@ -1,6 +1,5 @@
 {% extends 'Cliente/base.html'%}
 {% load static %}
-<<<<<<< HEAD
 {% block navbar %}
     <!-- Cabecera -->
   <div class="jumbotron text-center" style="background-image: url(media/Textura.jpg); background-size: 100%; padding-top: 2%; padding-bottom: 1%;">
@@ -15,7 +14,6 @@
      <!-- Carrito -->
      <div class="col-sm-2">
        <a href="{% url 'carrito' %}">
-         <h1 id='numero_carrito '>{{items}}</h1>
          <i class="fas fa-shopping-cart" style="width: 50px; height: 50px; float: right; color: green;"></i>
        </a>
      </div>
@@ -33,7 +31,7 @@
                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: green">CATEGORIAS</a>
                <div class="dropdown-menu">
                  {% for categoria in categorias %}
-                   <a class="dropdown-item" href="#">{{categoria.nombre}}</a>
+                   <a class="dropdown-item" href="#{{categoria.pk}}">{{categoria.nombre}}</a>
                  {% endfor %}
                </div>
              </div>
@@ -51,8 +49,6 @@
    <hr style="background-color: black; width: 80%">
  </div>
  {% endblock %}
-=======
->>>>>>> d9d29c1225cc1370c838a4b157bff38478428b2a
    <!-- Menu principal del dia por defecto -->
    <!-- Si selecciona una categoria, se actualiza el contenido -->
    {% block content %}
@@ -70,7 +66,7 @@
          <div class="row">
             {% for categoria in categorias %}
                <!-- Titulo Categoria -->
-               <div class="col-sm-12" id="{{categoria.nombre}}">
+               <div class="col-sm-12" id="{{categoria.pk}}">
                   <h1 style="text-align: center">{{categoria.nombre}}</h1>
                   <hr style="background-color: black; width: 50%">
                   <br>
@@ -80,7 +76,7 @@
                      <form id="formCarrito{{producto.id}}" method="post" action="/agregaritem">
                         {% csrf_token %}
                         <div class="col-sm-4">
-                           <div class="card" style="width:200px; height:auto">
+                           <div class="card" style="width:245px; height:auto">
                               <img class="card-img-top" src="{{producto.foto.url}}" alt="Card image"style="width: auto; height: 200px">
                               <div class="card-body">
                                  <h4></h4>{{producto.nombre}} ${{producto.precioActual}}</h4> <hr>
@@ -105,7 +101,6 @@
             body: new FormData(document.getElementById('formCarrito'+producto_id))
          });
          alert("Se agrego tu producto al carrito.");
-
          return false;
       }
    </script>
